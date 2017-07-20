@@ -7,22 +7,22 @@ Ext.define('hdb.Application', {
     extend: 'Ext.app.Application',
     
     name: 'hdb',
+    requires: [
+        'hdb.view.login.Login',
+        'hdb.view.main.MainView'
+    ],
 
     stores: [
         // TODO: add global / shared stores here
     ],
     
-    launch: function () {
-        // TODO - Launch the application
-    },
+    launch: function (){
+        var loggedIn;
 
-    onAppUpdate: function () {
-        Ext.Msg.confirm('Application Update', 'This application has an update, reload?',
-            function (choice) {
-                if (choice === 'yes') {
-                    window.location.reload();
-                }
-            }
-        );
+        loggedIn = localStorage.getItem("hdbDrama");
+
+        Ext.create({        
+            xtype: loggedIn ? 'mainview' : 'loginview'
+        });
     }
 });

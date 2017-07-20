@@ -9,14 +9,14 @@ Ext.application({
     extend: 'hdb.Application',
 
     requires: [
-        'hdb.view.main.Main'
+        'hdb.view.login.Login'
     ],
 
     // The name of the initial view to create. With the classic toolkit this class
     // will gain a "viewport" plugin if it does not extend Ext.Viewport. With the
     // modern toolkit, the main view will be added to the Viewport.
     //
-    mainView: 'hdb.view.main.Main'
+    loginview: 'hdb.view.login.Loginn'
 	
     //-------------------------------------------------------------------------
     // Most customizations should be made to hdb.Application. If you need to

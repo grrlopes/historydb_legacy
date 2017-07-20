@@ -524,11 +524,16 @@
      *
      */
     
+    "locale": "pt_BR", 
+    
     "builds": {
         "classic": {
             "toolkit": "classic",
+            "requires": [
+                "locale"
+            ],             
             
-            "theme": "theme-triton",
+            "theme": "theme-neptune",
             
             "sass": {
                 "generated": {
