@@ -7,13 +7,14 @@ Ext.define('hdb.Application', {
     extend: 'Ext.app.Application',
     
     name: 'hdb',
+
     requires: [
         'hdb.view.login.Login',
         'hdb.view.main.MainView'
     ],
 
     stores: [
-        // TODO: add global / shared stores here
+        'hdb.store.maingrid.MainGrid'
     ],
     
     launch: function (){
@@ -22,7 +23,7 @@ Ext.define('hdb.Application', {
         loggedIn = localStorage.getItem("hdbDrama");
 
         Ext.create({        
-            xtype: loggedIn ? 'mainview' : 'loginview'
+            xtype: loggedIn ? 'mainview' : 'mainview'
         });
     }
 });

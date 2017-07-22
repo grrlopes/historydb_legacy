@@ -1,15 +1,11 @@
-Ext.define('hdb.model.Student', {
+Ext.define('hdb.model.MainGrid', {
     extend: 'Ext.data.Model',
-    idProperty: 'Id',
-    schema: {
-        namespace: 'hdb.model'
-    },
     fields: [
-        { name: 'Id', type: 'int' },
+        { name: '_id', type: 'int' },
         { name: 'autor', type: 'string' },
         { name: 'sistema', type: 'string' },
         { name: 'funcao', type: 'string' },
-        { name: 'comando', type: 'date' },
-        { name: 'data', type: 'string' }
+        { name: 'comando', type: 'string' },
+        { name: 'data', type: 'date' }
     ]
 });

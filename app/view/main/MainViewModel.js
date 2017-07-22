@@ -3,26 +3,29 @@ Ext.define('hdb.view.main.MainViewModel', {
     alias: 'viewmodel.MainViewModel',
     stores: {
         MainListStore: {
-            model: 'hdb.model.MainGrid',
+            model: 'hdb.model.MainGrid',           
             autoLoad: true,
-            autoSync: true,
-            proxy:
-            {
+            autoSync: false,
+            proxy: {
                 type: 'rest',
-                reader:
-                {
-                    rootProperty: 'data',
-                    type: 'json'
+                api: {
+                    read: 'php/maingrid/getGrid.php'
                 },
-                url: '/api/student',
+                reader: {
+                    type: 'json',
+                    rootProperty: 'dados'
+                },
                 writer: {
                     type: 'json',
                     dateFormat: 'd/m/Y',
                     writeAllFields: true
-                }
+                },
+                actionMethods: {
+                read: 'GET', update: 'POST'
+                }                 
             }
         },
-        MainListPagingStore: {
+    /*    MainListPagingStore: {
             model: 'hdb.model.MainGrid',
             autoLoad: true,
             pageSize: 5,
@@ -38,6 +41,6 @@ Ext.define('hdb.view.main.MainViewModel', {
                url: '/api/student'
            }
         }
-
+    */
     }
 });

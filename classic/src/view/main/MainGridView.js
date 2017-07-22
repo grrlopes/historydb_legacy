@@ -6,12 +6,18 @@ Ext.define('hdb.view.main.MainGridView', {
     title: 'HistoryDB',
 
     store: {
-        type: ''
+        type: 'maingrid'
     },
+
+    viewModel: { 
+        type: 'MainViewModel' 
+    },    
 
     plugins: [{
         ptype: 'rowediting',
         clicksToMoveEditor: 1,
+        cancelBtnText: 'Cancelar',
+        saveBtnText: 'Salvar',
         autoCancel: false
     }],
 
@@ -31,7 +37,6 @@ Ext.define('hdb.view.main.MainGridView', {
         flex: 1,
         editor: {
             allowBlank: false,
-            vtype: 'sistema'
         }
     }, {
         header: 'Função',
@@ -40,7 +45,6 @@ Ext.define('hdb.view.main.MainGridView', {
         flex: 1,
         editor: {
             allowBlank: false,
-            vtype: 'funcao'
         }
     },{
         header: 'Comando',
@@ -49,8 +53,13 @@ Ext.define('hdb.view.main.MainGridView', {
         flex: 1,
         editor: {
             allowBlank: false,
-            vtype: 'comando'
         }
+    },{
+        header: 'Data',
+        dataIndex: 'data',
+        flex: 1,
+        xtype: 'datecolumn',
+        format: 'd-m-Y H:i' 
     }],
 
     tbar: [{
@@ -61,5 +70,13 @@ Ext.define('hdb.view.main.MainGridView', {
         reference: 'removeEmployee',
         handler: 'onRemoveClick',
         disabled: true
+    }],
+
+    dockedItems: [{
+        xtype: 'pagingtoolbar',
+        //store: productStore,
+        dock: 'bottom',
+        displayInfo: true
     }]
+
 });

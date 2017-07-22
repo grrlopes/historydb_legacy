@@ -3,11 +3,11 @@
  * @autor  Gabriel Lopes
  * @email   gabrielrrlopes@gmail.com
  **/
-define("HOST", "localhost");
-define("BANCO", "mypass");
+define("HOST", "mongodb://localhost");
+define("BANCO", "historydb");
 define("PORTA", "27017");
-define("USER", "root");
-define("SENHA", "123456");
+define("USER", "");
+define("SENHA", "");
 
 function __autoload($Class){
     $dir = ['class'];
