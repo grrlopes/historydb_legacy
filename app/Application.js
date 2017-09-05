@@ -14,7 +14,7 @@ Ext.define('hdb.Application', {
     ],
 
     stores: [
-        'hdb.store.maingrid.MainGrid'
+        
     ],
     
     launch: function (){

@@ -4,6 +4,10 @@ Ext.define('hdb.view.main.MainController', {
 
     onNovoClick: function(){
         console.log('kkkk');
+    },
+
+    onTeste: function(){
+        Ext.getCmp('pesquisa').setValue('');
     }
 
 })

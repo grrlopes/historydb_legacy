@@ -11,11 +11,11 @@ $systeml->ExecutaFind('comandos');
 
 foreach ($systeml->ObterResultado() as $key => $valor) {
     foreach ($valor->data as $key2 => $valor2) {
-        $data = new MongoDB\BSON\UTCDateTime($valor2);
-        $datatime = $data->toDateTime();
-        $valor->data = $datatime->format('r');
+        #$data = new MongoDB\BSON\UTCDateTime($valor2);
+        #$datatime = $data->toDateTime();
+        #$valor->data = $datatime->format('r');
     }
-     print_r($valor);
+     #echo $valor;
 }
 
 /*
