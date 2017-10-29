@@ -20,11 +20,14 @@ class systeml extends conexao{
     public function ObterResultado(){
         $this->Resultado = array();
         foreach ($this->Leitura as $key => $valor){
-            foreach ($valor->data as $key2 => $valor2) {
+            foreach ($valor->data as $key2 => $valor2){
                 $data = new MongoDB\BSON\UTCDateTime($valor2);
                 $datatime = $data->toDateTime();
                 $valor->data = $datatime->format('r');
-            }            
+            }
+            foreach ($valor->_id as $key3 => $valor3){
+                $valor->_id = $valor3;
+            }
             array_push($this->Resultado, $valor);
         }
         return $this->Resultado;

@@ -22,5 +22,4 @@ Ext.define('hdb.store.maingrid.MainGrid',{
             read: 'GET', update: 'POST'
         }
     }
-
 })

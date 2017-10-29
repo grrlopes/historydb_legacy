@@ -9,17 +9,11 @@ Ext.define('hdb.view.main.MainGridView', {
         store: '{MainListStore}'
     },
 
+    controller: 'mainviewctrl',
+
     viewModel: { 
         type: 'MainViewModel' 
-    },    
-
-    plugins: [{
-        ptype: 'rowediting',
-        clicksToMoveEditor: 1,
-        cancelBtnText: 'Cancelar',
-        saveBtnText: 'Salvar',
-        autoCancel: false
-    }],
+    },
 
     columns: [{
         header: 'Autor',
@@ -33,28 +27,19 @@ Ext.define('hdb.view.main.MainGridView', {
         dataIndex: 'sistema',
         dirtyText: 'Sistema será alterado',
         flex: 1,
-        align: 'center',
-        editor: {
-            allowBlank: false,
-        }
+        align: 'center'
     }, {
         header: 'Função',
         dataIndex: 'funcao',
         dirtyText: 'E-mail será alterado',
         flex: 1,
-        align: 'center',
-        editor: {
-            allowBlank: false,
-        }
+        align: 'center'
     },{
         header: 'Comando',
         dataIndex: 'comando',
         dirtyText: 'Comando será alterado',
         align: 'center',
-        flex: 1,
-        editor: {
-            allowBlank: false,
-        }
+        flex: 1
     },{
         header: 'Data',
         dataIndex: 'data',
@@ -63,6 +48,10 @@ Ext.define('hdb.view.main.MainGridView', {
         xtype: 'datecolumn',
         format: 'd-m-Y H:i' 
     }],
+
+    listeners: {
+        rowdblclick: 'onSelect'
+    },
 
     tbar: [{
         text: 'Novo',
