@@ -5,9 +5,10 @@
  **/
 require_once '../config.inc.php';
 $systeml = new systeml;
-$systeml->ExecutaFind('comandos');
+$systeml->ExecutaFind('comandos', 'agrega');
+
 echo json_encode(array(
     "success" => true,
     "total" => null,
-    "dados" => $systeml->ObterResultado()
+    "dados" => $systeml->Obter()
 ));

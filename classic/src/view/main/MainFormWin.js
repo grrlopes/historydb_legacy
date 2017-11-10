@@ -34,12 +34,12 @@ Ext.define('hdb.view.main.MainFormWin', {
             name: 'autor',
             fieldLabel: 'Autor',
             allowBlank: false,
-            disabled: true
+            readOnly: true
         },{
             xtype: 'textfield',
             name: 'sistema',
             fieldLabel: 'Sistema',
-            disabled: true
+            readOnly: true
         },{
             xtype: 'textfield',
             name: 'funcao',
@@ -50,10 +50,8 @@ Ext.define('hdb.view.main.MainFormWin', {
             xtype: 'htmleditor',
             name: 'comando',
             fieldLabel: 'Comando',
+            height: 150,
             allowBlank: false,
-        },{
-            xtype: 'displayfield',
-            hideEmptyLabel: true
         }],
         buttons: [{
             text: 'Salvar',
