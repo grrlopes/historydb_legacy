@@ -6,7 +6,8 @@ Ext.define('hdb.view.main.MainController', {
     ],
 
     onNovoClick: function(){
-        console.log('44444dcc');
+        //store = this.getViewModel().getStore('MainListStore');
+        //store.sync();
     },
 
     onTeste: function(){
@@ -15,9 +16,13 @@ Ext.define('hdb.view.main.MainController', {
 
     onEditForm: function(btn, e, eOpts){
         var win = btn.up('window'),
-        form = win.down('form');
-        console.log(form.getValues());
-
+            form = win.down('form'),
+            store = Ext.ComponentQuery.query('maingridview')[0].getStore(),
+            record = form.getRecord(),
+            valor = form.getValues();
+            record.set(valor);
+        store.sync();
+        store.load();
     },
 
     onSelect: function (grid, record, index, eOpts){

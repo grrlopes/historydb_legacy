@@ -60,7 +60,7 @@ class systeml extends conexao{
             $pipeline = [
                 ['$unwind' => '$comando'],
                 ['$match' => [
-                    'comando.principal' =>  ['$in' => ['true']]
+                    'comando.principal' =>  ['$in' => [true]]
                 ],
                 ]
             ];
@@ -81,7 +81,7 @@ class systeml extends conexao{
             if(!$this->ValidExec){
                 $this->Leitura = $this->Conexao->executeQuery($this->Sintaxe, $this->Query);
             }else{
-                $this->Leitura = $this->Conexao->executeCommand('histo', $this->Query);
+                $this->Leitura = $this->Conexao->executeCommand(parent::$Db, $this->Query);
             }
         }catch(MongoDB\Driver\Exception\Exception $e){
             var_dump($e);

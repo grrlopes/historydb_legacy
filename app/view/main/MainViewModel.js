@@ -3,13 +3,14 @@ Ext.define('hdb.view.main.MainViewModel', {
     alias: 'viewmodel.MainViewModel',
     stores: {
         MainListStore: {
-            model: 'hdb.model.MainGrid',           
+            model: 'hdb.model.MainGrid',
             autoLoad: true,
             autoSync: false,
             proxy: {
                 type: 'rest',
                 api: {
-                    read: 'php/maingrid/getGrid.php'
+                    read: 'php/maingrid/getGrid.php',
+                    update: 'php/maingrid/setForm.php'
                 },
                 reader: {
                     type: 'json',
@@ -17,14 +18,15 @@ Ext.define('hdb.view.main.MainViewModel', {
                 },
                 writer: {
                     type: 'json',
-                    dateFormat: 'd/m/Y',
-                    writeAllFields: true
+                    writeAllFields: true,
+                    rootProperty: 'dados',
+                    encode: true
                 },
                 actionMethods: {
                 read: 'GET', update: 'POST'
                 }                 
             }
-        },
+        }
     /*    MainListPagingStore: {
             model: 'hdb.model.MainGrid',
             autoLoad: true,

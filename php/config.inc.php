@@ -4,7 +4,7 @@
  * @email   gabrielrrlopes@gmail.com
  **/
 define("HOST", "mongodb://localhost");
-define("BANCO", "historydb");
+define("BANCO", "histo");
 define("PORTA", "27017");
 define("USER", "");
 define("SENHA", "");

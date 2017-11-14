@@ -2,9 +2,7 @@ Ext.define('hdb.view.main.MainGridView', {
     extend: 'Ext.grid.Panel',
     xtype: 'row-editing',
     alias: 'widget.maingridview',
-
     title: 'HistoryDB',
-
     bind: {
         store: '{MainListStore}'
     },
@@ -37,7 +35,6 @@ Ext.define('hdb.view.main.MainGridView', {
     },{
         header: 'Comando',
         dataIndex: 'comando',
-        dirtyText: 'Comando será alterado',
         align: 'center',
         flex: 1
     },{
