@@ -8,12 +8,16 @@ class systeml extends conexao{
     private $Conexao;
     private $Colecao;
     private $Query;
+    private $Id;
     private $Sintaxe;
     private $Resultado;
     private $ValidExec;
+    private $Principal;
 
-    public function ExecutaFind($colecao, $query = null){
+    public function ExecutaFind($colecao, $query = null, $main = true, $_id = null){
+        $this->Id = $_id;
         $this->Colecao = $colecao;
+        $this->Principal = $main;
         $this->ValidExec = (!is_null($query)) ? true : false;
         $this->TerSyntax();
         $this->Executar();
@@ -38,7 +42,7 @@ class systeml extends conexao{
     public function Obter(){
         foreach ($this->Leitura as $key => $valor){
             foreach ($valor->result as $key2 => $valor2){
-                foreach ($valor2->data as $key3 => $valor3){
+                foreach ($valor2->comando->cdata as $key3 => $valor3){
                     $data = new MongoDB\BSON\UTCDateTime($valor3);
                     $datatime = $data->toDateTime();
                     $valor2->data = $datatime->format('r');
@@ -57,13 +61,24 @@ class systeml extends conexao{
             $this->Sintaxe = parent::$Db.".".$this->Colecao;
             $this->Query = new MongoDB\Driver\Query([]);
         }else{
-            $pipeline = [
-                ['$unwind' => '$comando'],
-                ['$match' => [
-                    'comando.principal' =>  ['$in' => [true]]
-                ],
-                ]
-            ];
+            if(is_null($this->Id)){
+                $pipeline = [
+                    ['$unwind' => '$comando'],
+                    ['$match' => [
+                        'comando.principal' =>  ['$in' => [$this->Principal]]
+                    ],
+                    ]
+                ];
+            }else{
+                $pipeline = [
+                    ['$unwind' => '$comando'],
+                    ['$match' => [
+                        '_id' => ['$in' => [new MongoDB\BSON\ObjectId($this->Id)]],
+                        'comando.principal' =>  ['$in' => [$this->Principal]]
+                    ],
+                    ]
+                ];
+            }
             $this->Query = new \MongoDB\Driver\Command([
                 'aggregate' => 'comandos',
                 'pipeline' => $pipeline

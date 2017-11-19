@@ -23,6 +23,7 @@ $comando = $data->comando;
 $Dados = [
     '_id' => "$_id", 'funcao' => "$funcao",
     'sistema' => "$funcao", 'autor' => "$autor",
-    'comando' => "$comando", 'principal' => true
+    'comando' => "$comando", 'principal' => true,
+    'cdata' => new MongoDB\BSON\UTCDateTime()
 ];
 $systemc->ExeCriacao('comandos', $Dados);

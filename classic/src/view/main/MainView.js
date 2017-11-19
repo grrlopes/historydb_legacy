@@ -18,7 +18,7 @@ Ext.define('hdb.view.main.MainView', {
         region: 'center',              
         border: false,
         defaults: {
-            //layout: 'fit'
+            layout: 'fit'
         },
         xtype: 'maingridview'
     }]

@@ -26,23 +26,29 @@ Ext.define('hdb.view.main.MainViewModel', {
                 read: 'GET', update: 'POST'
                 }                 
             }
-        }
-    /*    MainListPagingStore: {
+        },
+        MainFormGridStoree: {
             model: 'hdb.model.MainGrid',
-            autoLoad: true,
-            pageSize: 5,
-            proxy:
-           {
-               type: 'rest',
-               reader:
-               {
-                   rootProperty: 'data',
-                   type: 'json',
-                   totalProperty: 'TotalCount'
-               },
-               url: '/api/student'
-           }
+            buffered: true,
+            autoLoad: false,
+            autoSync: false,
+            sorters: [{
+                property: 'data',
+                direction: 'desc'
+            }],
+            proxy: {
+                type: 'rest',
+                api: {
+                    read: 'php/maingrid/getFormGrid.php'
+                },
+                reader: {
+                    type: 'json',
+                    rootProperty: 'dados'
+                },
+                actionMethods: {
+                    read: 'GET'
+                }
+            }
         }
-    */
     }
 });

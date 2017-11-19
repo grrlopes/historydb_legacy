@@ -1,45 +1,42 @@
 Ext.define('hdb.view.main.MainFormGrid', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.mainformgrid',
+    maxHeight: 387,
 
-    bind: {
-        store: '{MainListStore}'
+    viewConfig: {
+        enableTextSelection: true,
+        float: true,
+        disableSelection: true,
+        stripeRows: false,
+        preserveScrollOnRefresh: true,
+        trackOver: false
     },
 
     viewModel: {
         type: 'MainViewModel'
     },
 
+    store: 'mainFormgridstoreId',
     columns: [{
-        header: 'Autor',
-        dataIndex: 'autor',
-        width: 100,
-        flex: 1,
-        dirtyText: 'autor será alterado',
-        align: 'center'
-    }, {
-        header: 'Sistema',
-        dataIndex: 'sistema',
-        dirtyText: 'Sistema será alterado',
-        flex: 1,
-        align: 'center'
-    }, {
-        header: 'Função',
-        dataIndex: 'funcao',
-        dirtyText: 'E-mail será alterado',
-        flex: 1,
-        align: 'center'
-    },{
         header: 'Comando',
         dataIndex: 'comando',
-        align: 'center',
+        align: 'left',
         flex: 1
+    },{
+        header: 'Autor',
+        dataIndex: 'autor',
+        width: 150,
+        align: 'center'
     },{
         header: 'Data',
         dataIndex: 'data',
         align: 'center',
-        flex: 1,
+        width: 135,
         xtype: 'datecolumn',
         format: 'd-m-Y H:i'
+    }],
+    tbar: [{
+        text: 'Reload',
+        handler: 'onReloadForm'
     }]
 });

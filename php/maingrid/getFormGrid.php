@@ -4,11 +4,10 @@
  * @email   gabrielrrlopes@gmail.com
  **/
 require_once '../config.inc.php';
-$dados = filter_input(INPUT_GET,'dados');
+$id = filter_input(INPUT_GET,'_id');
 $systeml = new systeml;
-$systeml->ExecutaFind('comandos', 'agrega');
+$systeml->ExecutaFind('comandos', 'agrega', false, $id);
 echo json_encode(array(
     "success" => true,
-    "total" => null,
     "dados" => $systeml->Obter()
 ));

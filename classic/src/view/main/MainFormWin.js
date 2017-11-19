@@ -2,13 +2,16 @@ Ext.define('hdb.view.main.MainFormWin', {
     extend: 'Ext.window.Window',
     alias: 'widget.mainformwin',
     requires: [
-        //'Ext.form.Panel'
         'hdb.view.main.MainFormGrid'
     ],
-    controller: 'mainviewctrl',
-    viewModel: { type: 'MainViewModel' },
 
-    width: 700,
+    controller: 'mainviewctrl',
+
+    viewModel: {
+        type: 'MainViewModel'
+    },
+
+    width: 710,
     height: 470,
     maxWidth: 800,
     maxHeight: 500,
@@ -16,7 +19,7 @@ Ext.define('hdb.view.main.MainFormWin', {
     minHeight: 300,
 
     bodyPadding: 1,
-    resizable: false,
+    resizable: true,
     closable: true,
     autoShow: true,
     autoDestroy: true,
@@ -26,7 +29,7 @@ Ext.define('hdb.view.main.MainFormWin', {
     items: [{
         region: 'center',
         xtype: 'tabpanel',
-        activeTab: 0,
+        activeTab: 1,
         split: false,
         border: false,
         defaults: {
@@ -77,8 +80,6 @@ Ext.define('hdb.view.main.MainFormWin', {
         },{
             title: 'Histórico',
             items: [{
-                width: 675,
-                height: 390,
                 defaults: {
                     labelAlign: 'top'
                 },

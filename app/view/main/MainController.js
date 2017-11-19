@@ -5,9 +5,17 @@ Ext.define('hdb.view.main.MainController', {
         'hdb.view.main.MainFormWin'
     ],
 
-    onNovoClick: function(){
-        //store = this.getViewModel().getStore('MainListStore');
-        //store.sync();
+    onNovoForm: function(){
+    },
+
+    onReloadForm: function(btn, e, eOpts){
+        var win = btn.up('window'),
+        form = win.down('form'),
+        record = form.getRecord();
+        var store = Ext.data.StoreManager.lookup('mainFormgridstoreId');
+        store.load({
+            params:{_id: record.get('_id'), dados: 'formGrid'}
+        });
     },
 
     onTeste: function(){
@@ -27,8 +35,12 @@ Ext.define('hdb.view.main.MainController', {
 
     onSelect: function (grid, record, index, eOpts){
         var win = Ext.create('hdb.view.main.MainFormWin');
+        var store = Ext.data.StoreManager.lookup('mainFormgridstoreId');
         win.setTitle('Informação do sistema - '+record.get('sistema'));
         var form = win.down('form');
         form.loadRecord(record);
+        store.load({
+            params:{_id: record.get('_id'), dados: 'formGrid'}
+        });
     }
 })
