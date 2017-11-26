@@ -4,7 +4,7 @@
  * @email   gabrielrrlopes@gmail.com
  **/
 require_once '../config.inc.php';
-$systemu = new systemu;
+$systemc = new systemc;
 $dados = filter_input(INPUT_POST,'dados');
 function replace_unicode_escape_sequence($match){
     return mb_convert_encoding(pack(
@@ -15,14 +15,25 @@ function unicode_decode($str){
     'replace_unicode_escape_sequence', $str);
 }
 $data = json_decode(unicode_decode($dados));
-$_id = $data->_id;
 $funcao = $data->funcao;
 $sistema = $data->sistema;
-$autor = $data->autor;
+$autor = '$data->autor';
 $comando = $data->comando;
+$data = new MongoDB\BSON\UTCDateTime;
 $Dados = [
-    '_id' => "$_id", 'autor' => "$autor",
-    'comando' => "$comando", 'principal' => true,
-    'cdata' => new MongoDB\BSON\UTCDateTime
+    'funcao' => "$funcao", 'sistema' => "$funcao", 
+    'autor' => "$autor", 'comando' => "$comando", 
 ];
-$systemu->ExeUpdate('comandos', $Dados);
+$systemc->ExeCriacao('comandos', $Dados);
+echo json_encode(array(
+    "success" => true,
+    "dados" => array(
+        "_id" => $systemc->ObterOid(),
+        "funcao" => $funcao,
+        "sistema" => $sistema,
+        "autor" => $autor,
+        "comando" => $comando,
+        "data" => $systemc->ObterData()
+
+    )
+));

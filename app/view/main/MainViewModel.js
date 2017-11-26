@@ -10,7 +10,8 @@ Ext.define('hdb.view.main.MainViewModel', {
                 type: 'rest',
                 api: {
                     read: 'php/maingrid/getGrid.php',
-                    update: 'php/maingrid/setForm.php'
+                    update: 'php/maingrid/setForm.php',
+                    create: 'php/maingrid/setNovoCad.php'
                 },
                 reader: {
                     type: 'json',
@@ -27,26 +28,23 @@ Ext.define('hdb.view.main.MainViewModel', {
                 }                 
             }
         },
-        MainFormGridStoree: {
+        MainNovoCadStore: {
             model: 'hdb.model.MainGrid',
-            buffered: true,
             autoLoad: false,
             autoSync: false,
-            sorters: [{
-                property: 'data',
-                direction: 'desc'
-            }],
             proxy: {
                 type: 'rest',
                 api: {
-                    read: 'php/maingrid/getFormGrid.php'
+                    create: 'php/maingrid/setNovoCad.php',
                 },
-                reader: {
+                writer: {
                     type: 'json',
-                    rootProperty: 'dados'
+                    writeAllFields: true,
+                    rootProperty: 'dados',
+                    encode: true
                 },
                 actionMethods: {
-                    read: 'GET'
+                    update: 'POST'
                 }
             }
         }

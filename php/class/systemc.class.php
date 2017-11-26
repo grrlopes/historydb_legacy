@@ -4,12 +4,15 @@
  * @email   gabrielrrlopes@gmail.com
  **/
 class systemc extends conexao{
+    private $Criacao;
     private $Conexao;
     private $Colecao;
     private $Dados;
+    private $Qdados;
     private $Query;
     private $Sintaxe;
-    private $Id;
+    private $Datas;
+    private $Oid;
 
     public function ExeCriacao($colecao, array $query){
         $this->Colecao = $colecao;
@@ -18,40 +21,60 @@ class systemc extends conexao{
         $this->Executar();
     }
 
+    public function ObterOid(){
+        return (string)$this->Oid;
+    }
+
+    public function ObterData(){
+        foreach ($this->Datas as $key => $data){
+            if($key = 'data'){
+                return $data;
+            }
+        }
+    }
+
     private function TerConexao(){
         $this->Conexao = parent::fazercon();
     }
 
     private function TerSyntax(){
+        $this->Oid = new MongoDB\BSON\ObjectId;
         $this->Sintaxe = parent::$Db.".".$this->Colecao;
-        $this->Query = new MongoDB\Driver\BulkWrite();
-        foreach ($this->Dados as $key => $valor){
-            if($key == '_id'){
-                 $this->Id = $this->Dados[$key];
-                unset($this->Dados[$key]);
-            }
-        }
-        $this->ExtTerSyntax();
-        $this->Query->update(
-            ['_id' => new MongoDB\BSON\ObjectId($this->Id)],
-            ['$push' => ['comando' => $this->Dados]]
-        );
+        $this->Criacao = new MongoDB\Driver\BulkWrite;
+        $this->Query = [
+            '_id' => $this->Oid,
+            'data' => $this->TerData(),
+            'comando' => [
+                [
+                    'autor' => 'grrodrigues', 'comando' => $this->Dados['comando'],
+                    'principal' => true, 'cdata' => $this->TerData()
+                ]
+            ],
+            'funcao' => $this->Dados['funcao'],
+            'sistema' => $this->Dados['sistema'],
+            'autor' => 'grrodrigues'
+        ];
+        $this->Criacao->insert($this->Query);
     }
 
-    private function ExtTerSyntax(){
-        $this->Query->update(
-            ['_id' => new MongoDB\BSON\ObjectId($this->Id),
-            'comando' => ['$elemMatch' => ["principal" => ['$eq' => true]]]
-            ],
-            ['$set' => ['comando.$.principal' => false]]
-        );
+    private function TerData(){
+        $datas = new DateTime();
+        $datas->setTimezone(new DateTimeZone(parent::$Tzone));
+        foreach ($datas as $key => $valor) {
+            if($key == 'date'){
+                $datas = new DateTime($valor);
+                $this->Datas = $datas;
+                $datas = $datas->getTimestamp();
+                return new MongoDB\BSON\UTCDateTime($datas*1000);
+            }
+        }
     }
 
     private function Executar(){
         try{
             $this->TerConexao();
             $writeConcern = new MongoDB\Driver\WriteConcern(MongoDB\Driver\WriteConcern::MAJORITY, 100);
-            $this->Conexao->executeBulkWrite($this->Sintaxe, $this->Query, $writeConcern);
+            $eu = $this->Conexao->executeBulkWrite($this->Sintaxe, $this->Criacao, $writeConcern);
         }catch(MongoDB\Driver\Exception\Exception $e){
             var_dump($e);
         }

@@ -8,6 +8,7 @@ define("BANCO", "histo");
 define("PORTA", "27017");
 define("USER", "");
 define("SENHA", "");
+define("TZONE", "America/Sao_Paulo");
 
 function __autoload($Class){
     $dir = ['class'];

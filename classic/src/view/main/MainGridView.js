@@ -18,16 +18,26 @@ Ext.define('hdb.view.main.MainGridView', {
         dataIndex: 'sistema',
         width: 200,
         align: 'center'
-    }, {
+    },{
         header: 'Função',
         dataIndex: 'funcao',
         width: 200,
         align: 'center'
     },{
+        header: 'Editor(a)',
+        dataIndex: 'autor',
+        width: 150,
+        align: 'center'
+    },{
         header: 'Comando',
         dataIndex: 'comando',
         align: 'left',
-        flex: 1,
+        flex: 1
+    },{
+        header: 'Revisão',
+        dataIndex: '',
+        width: 80,
+        align: 'center'
     },{
         header: 'Autor',
         dataIndex: 'autor',
@@ -48,7 +58,7 @@ Ext.define('hdb.view.main.MainGridView', {
 
     tbar: [{
         text: 'Novo',
-        handler: 'onNovoClick'
+        handler: 'onNovoForm'
     }, {
         text: 'Remover',
         handler: 'onRemoveClick',

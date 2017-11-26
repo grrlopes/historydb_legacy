@@ -10,6 +10,7 @@
     protected static $Db = BANCO;
     private static $Porta = PORTA;
     private static $Conexao = null;
+    protected static $Tzone = TZONE;
 
     public static function fazercon(){
         return self::MongoConectar();

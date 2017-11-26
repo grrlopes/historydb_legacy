@@ -25,7 +25,7 @@ Ext.define('hdb.view.main.MainFormWin', {
     autoDestroy: true,
     destroyAction: 'hide',
     modal: true,
-
+    layout: 'fit',
     items: [{
         region: 'center',
         xtype: 'tabpanel',

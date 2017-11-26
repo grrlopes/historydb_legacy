@@ -2,7 +2,8 @@ Ext.define('hdb.view.main.MainFormGrid', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.mainformgrid',
     maxHeight: 387,
-
+    autoHeight: true,
+    resizable: true,
     viewConfig: {
         enableTextSelection: true,
         float: true,
