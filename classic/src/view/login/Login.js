@@ -7,7 +7,7 @@ Ext.define('hdb.view.login.Login', {
         'Ext.form.Panel'
     ],
 
-    controller: 'login',
+    controller: 'loginviewctrl',
 
     bodyPadding: 10,
     resizable: false,
@@ -17,15 +17,14 @@ Ext.define('hdb.view.login.Login', {
 
     items: {
         xtype: 'form',
-        reference: 'form',
         items: [{
             xtype: 'textfield',
-            name: 'username',
+            name: 'user',
             fieldLabel: 'Usuário',
             allowBlank: false
         }, {
             xtype: 'textfield',
-            name: 'password',
+            name: 'pass',
             inputType: 'password',
             fieldLabel: 'Senha',
             allowBlank: false
@@ -37,7 +36,7 @@ Ext.define('hdb.view.login.Login', {
             text: 'Logar',
             formBind: true,
             listeners: {
-                click: 'onLoginClick'
+                click: 'onLogin'
             }
         }]
     }

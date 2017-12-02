@@ -10,6 +10,15 @@ Ext.define('hdb.view.main.MainController', {
         var win = Ext.create('hdb.view.main.MainNovoForm');
     },
 
+    onLogOff: function(button, e, eOpts) {
+        sessionStorage.removeItem("historydb");
+        localStorage.removeItem("historydb");
+        this.getView().destroy();
+        Ext.widget(
+            'loginview'
+        )
+    },
+
     onCadastraForm: function(btn, e, eOpts){
         var win = btn.up('window'),
             form = win.down('form'),

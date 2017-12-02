@@ -8,6 +8,8 @@ class systeml extends conexao{
     private $Conexao;
     private $Colecao;
     private $Query;
+    private $User;
+    private $Pwd;
     private $Id;
     private $Sintaxe;
     private $Resultado;
@@ -21,6 +23,26 @@ class systeml extends conexao{
         $this->ValidExec = (!is_null($query)) ? true : false;
         $this->TerSyntax();
         $this->Executar();
+    }
+
+    public function ExecLogin($colecao, $user, $pass){
+        $this->Colecao = $colecao;
+        $this->User = $user;
+        $this->Pwd = $pass;
+        $this->ValidExec = false;
+        $this->TerSyntaxlogin();
+        $this->Executar();
+    }
+
+    public function ObterAuth(){
+        foreach ($this->Leitura as $key => $valor){
+            if(md5($this->Pwd) === $valor->senha){
+                return array("level" => "valido", "sucesso" => true);
+            }else{
+                return array("level" => "novalido", "sucesso" => false);
+            }
+        }
+        return array("level" => "noexiste", "sucesso" => false);
     }
 
     public function ObterResultado(){
@@ -86,7 +108,14 @@ class systeml extends conexao{
         }
     }
 
-    public function TerConexao(){
+    private function TerSyntaxlogin(){
+        $this->Sintaxe = parent::$Db.".".$this->Colecao;
+        $filtro = ['usuario' => $this->User];
+        $opt = ['projection' => ['_id' => 0]];
+        $this->Query = new MongoDB\Driver\Query($filtro, $opt);
+    }
+
+    private function TerConexao(){
         $this->Conexao = parent::fazercon();
     }
 

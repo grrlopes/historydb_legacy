@@ -10,7 +10,10 @@ Ext.define('hdb.Application', {
 
     requires: [
         'hdb.view.login.Login',
-        'hdb.view.main.MainView'
+        'hdb.view.main.MainView',
+
+        'hdb.view.main.MainController',
+        'hdb.view.main.MainGridView'
     ],
 
     stores: [
@@ -19,11 +22,9 @@ Ext.define('hdb.Application', {
     
     launch: function (){
         var loggedIn;
-
-        loggedIn = localStorage.getItem("hdbDrama");
-
-        Ext.create({        
-            xtype: loggedIn ? 'mainview' : 'mainview'
-        });
+        loggedIn = sessionStorage.getItem("historydb");
+        Ext.widget(
+            loggedIn ? 'mainview' : 'loginview'
+        );
     }
 });

@@ -3,6 +3,19 @@ Ext.define('hdb.view.main.MainGridView', {
     alias: 'widget.maingridview',
     title: 'HistoryDB',
 
+    header:{
+        titlePosition: 0,
+        items:[{
+            xtype:'button',
+            text: localStorage.getItem("historydb"),
+            disabled: true
+        },{
+            xtype:'button',
+            text: 'Logoff',
+            handler: 'onLogOff'
+        }]
+    },
+
     bind: {
         store: '{MainListStore}'
     },
@@ -59,7 +72,7 @@ Ext.define('hdb.view.main.MainGridView', {
     tbar: [{
         text: 'Novo',
         handler: 'onNovoForm'
-    }, {
+    },'-',{
         text: 'Remover',
         handler: 'onRemoveClick',
         disabled: true
