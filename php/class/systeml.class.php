@@ -11,6 +11,11 @@ class systeml extends conexao{
     private $User;
     private $Pwd;
     private $Id;
+    private $Start;
+    private $Limit;
+    private $Total;
+    private $Search;
+    private $SearchCheck;
     private $Sintaxe;
     private $Resultado;
     private $ValidExec;
@@ -25,12 +30,79 @@ class systeml extends conexao{
         $this->Executar();
     }
 
+    public function SetPaging($start, $limit){
+        $this->Start = (int) $start;
+        $this->Limit = (int) $limit;
+    }
+
     public function ExecLogin($colecao, $user, $pass){
         $this->Colecao = $colecao;
         $this->User = $user;
         $this->Pwd = $pass;
         $this->ValidExec = false;
         $this->TerSyntaxlogin();
+        $this->Executar();
+    }
+
+    public function ExecPaging($colecao){
+        $this->Colecao = $colecao;
+        $this->Principal = true;
+        $this->ValidExec = true;
+        $this->TerSyntaxPaging();
+        $this->Executar();
+    }
+
+    public function ExecPagingQtd($colecao){
+        $this->Colecao = $colecao;
+        $this->Principal = true;
+        $this->ValidExec = true;
+        $this->TerSyntaxPagingTotal();
+        $this->Executar();
+    }
+
+    public function ExecSearch($colecao, $search, array $check){
+        $this->Colecao = $colecao;
+        $this->Search = $search;
+        foreach ($check as $key => $valor){
+            switch ($valor){
+                case 'comando':
+                    $check[$key] = 'comando.comando';
+                    break;
+                case 'autor':
+                    $check[$key] = 'comando.autor';
+                    break;
+            }
+            if(!isset($valor)){
+                unset($check[$key]);
+            }
+        }
+        $this->SearchCheck = $check;
+        $this->Principal = true;
+        $this->ValidExec = true;
+        $this->TerSyntaxSearch();
+        $this->Executar();
+    }
+
+    public function ExecSearchQtd($colecao, $search, array $check){
+        $this->Colecao = $colecao;
+        $this->Search = $search;
+        foreach ($check as $key => $valor){
+            switch ($valor){
+                case 'comando':
+                    $check[$key] = 'comando.comando';
+                    break;
+                case 'autor':
+                    $check[$key] = 'comando.autor';
+                    break;
+            }
+            if(!isset($valor)){
+                unset($check[$key]);
+            }
+        }
+        $this->SearchCheck = $check;
+        $this->Principal = true;
+        $this->ValidExec = true;
+        $this->TerSyntaxSearchTotal();
         $this->Executar();
     }
 
@@ -45,20 +117,15 @@ class systeml extends conexao{
         return array("level" => "noexiste", "sucesso" => false);
     }
 
-    public function ObterResultado(){
-        $this->Resultado = array();
+    public function ObterTotal(){
         foreach ($this->Leitura as $key => $valor){
-            foreach ($valor->data as $key2 => $valor2){
-                $data = new MongoDB\BSON\UTCDateTime($valor2);
-                $datatime = $data->toDateTime();
-                $valor->data = $datatime->format('r');
+            foreach ($valor as $key => $valor2){
+                foreach ($valor2 as $key => $value) {
+                    return $value->total;
+                }
+                return 0;
             }
-            foreach ($valor->_id as $key3 => $valor3){
-                $valor->_id = $valor3;
-            }
-            array_push($this->Resultado, $valor);
         }
-        return $this->Resultado;
     }
 
     public function Obter(){
@@ -86,10 +153,12 @@ class systeml extends conexao{
             if(is_null($this->Id)){
                 $pipeline = [
                     ['$unwind' => '$comando'],
-                    ['$match' => [
-                        'comando.principal' =>  ['$in' => [$this->Principal]]
+                    ['$match' =>
+                        [
+                            'comando.principal' =>  ['$in' => [$this->Principal]]
+                        ],
                     ],
-                    ]
+                    ['$limit' => $this->Limit]
                 ];
             }else{
                 $pipeline = [
@@ -113,6 +182,107 @@ class systeml extends conexao{
         $filtro = ['usuario' => $this->User];
         $opt = ['projection' => ['_id' => 0]];
         $this->Query = new MongoDB\Driver\Query($filtro, $opt);
+    }
+
+    private function TerSyntaxPaging(){
+        $this->Sintaxe = parent::$Db.".".$this->Colecao;
+        $pipeline = [
+            ['$unwind' => '$comando'],
+            ['$match' =>
+                [
+                    'comando.principal' =>  ['$in' => [$this->Principal]]
+                ],
+            ],
+            ['$skip' => $this->Start],
+            ['$limit' => $this->Limit]
+        ];
+        $this->Query = new \MongoDB\Driver\Command([
+            'aggregate' => 'comandos',
+            'pipeline' => $pipeline
+        ]);
+    }
+
+    private function TerSyntaxPagingTotal(){
+        $this->Sintaxe = parent::$Db.".".$this->Colecao;
+        $pipeline = [
+            ['$unwind' => '$comando'],
+            ['$match' =>
+                [
+                    'comando.principal' =>  ['$in' => [$this->Principal]]
+                ]
+            ],
+            ['$group' =>
+                [
+                    '_id' => null,
+                    'total' => ['$sum' => 1]
+                ]
+            ]
+        ];
+        $this->Query = new \MongoDB\Driver\Command([
+            'aggregate' => 'comandos',
+            'pipeline' => $pipeline
+        ]);
+    }
+
+    private function TerSyntaxSearch(){
+        $this->Sintaxe = parent::$Db.".".$this->Colecao;
+        $this->Resultado = array(
+            array('$unwind' => '$comando'),
+            array('$match' =>
+                Array(
+                    'comando.principal' => Array ('$in' => Array (0 => true))
+                ),
+            ),
+            array('$skip' => $this->Start),
+            array('$limit' => $this->Limit)
+        );
+        foreach ($this->SearchCheck as $valor){
+            $query = array(
+                $valor =>
+                Array(
+                    '$in' => Array(
+                        new MongoDB\BSON\Regex($this->Search,"i")
+                    )
+                )
+            );
+            $this->Resultado[1]['$match'] = array_merge(
+                $this->Resultado[1]['$match'], $query
+            );
+        }
+        $this->Query = new \MongoDB\Driver\Command([
+            'aggregate' => 'comandos',
+            'pipeline' => $this->Resultado
+        ]);
+    }
+
+    private function TerSyntaxSearchTotal(){
+        $this->Sintaxe = parent::$Db.".".$this->Colecao;
+        $this->Resultado = array(
+            array('$unwind' => '$comando'),
+            array('$match' =>
+                Array(
+                    'comando.principal' => Array ('$in' => Array (0 => true))
+                ),
+            ),
+            array('$group' => array('_id' => null, 'total' => array('$sum' => 1))),
+        );
+        foreach ($this->SearchCheck as $valor){
+            $query = array(
+                $valor =>
+                Array(
+                    '$in' => Array(
+                        new MongoDB\BSON\Regex($this->Search,"i")
+                    )
+                )
+            );
+            $this->Resultado[1]['$match'] = array_merge(
+                $this->Resultado[1]['$match'], $query
+            );
+        }
+        $this->Query = new \MongoDB\Driver\Command([
+            'aggregate' => 'comandos',
+            'pipeline' => $this->Resultado
+        ]);
     }
 
     private function TerConexao(){

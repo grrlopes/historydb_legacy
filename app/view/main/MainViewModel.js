@@ -6,6 +6,7 @@ Ext.define('hdb.view.main.MainViewModel', {
             model: 'hdb.model.MainGrid',
             autoLoad: true,
             autoSync: false,
+            pageSize: 5,
             proxy: {
                 type: 'rest',
                 api: {
@@ -25,8 +26,10 @@ Ext.define('hdb.view.main.MainViewModel', {
                 },
                 actionMethods: {
                 read: 'GET', update: 'POST'
-                }                 
-            }
+                }
+            },
+            remoteFilter: true,
+            filterParam: 'query'
         },
         MainNovoCadStore: {
             model: 'hdb.model.MainGrid',
@@ -35,7 +38,7 @@ Ext.define('hdb.view.main.MainViewModel', {
             proxy: {
                 type: 'rest',
                 api: {
-                    create: 'php/maingrid/setNovoCad.php',
+                    create: 'php/maingrid/setNovoCad.php'
                 },
                 writer: {
                     type: 'json',

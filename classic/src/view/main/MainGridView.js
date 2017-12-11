@@ -8,10 +8,12 @@ Ext.define('hdb.view.main.MainGridView', {
         items:[{
             xtype:'button',
             text: localStorage.getItem("historydb"),
+            glyph: 'f007@FontAwesome',
             disabled: true
         },{
-            xtype:'button',
+            xtype: 'button',
             text: 'Logoff',
+            glyph: 'f08b',
             handler: 'onLogOff'
         }]
     },
@@ -24,6 +26,10 @@ Ext.define('hdb.view.main.MainGridView', {
 
     viewModel: {
         type: 'MainViewModel' 
+    },
+
+    viewConfig : {
+      enableTextSelection: true
     },
 
     columns: [{
@@ -71,41 +77,94 @@ Ext.define('hdb.view.main.MainGridView', {
 
     tbar: [{
         text: 'Novo',
+        glyph: 'f055',
         handler: 'onNovoForm'
     },'-',{
         text: 'Remover',
+        glyph: 'f056',
         handler: 'onRemoveClick',
         disabled: true
     },'->',{
         xtype: 'toolbar',
+        margin: 'left',
         border: false,
         items: [{
-            id: 'pesquisa',
-            xtype: 'textfield',
-            triggers: {
-                foo: {
-                    cls: 'x-form-clear-trigger',
-                    handler: function() {
-                        console.log('foo trigger clicked');
-                    }
+          id: 'pesquisa',
+          xtype: 'textfield',
+          iconCls: 'search',
+          name: 'pesquisa',
+          emptyText: 'Pesquisa',
+          enableKeyEvents: true,
+          onTriggerClick: function(field, trigger, e){
+            Ext.getCmp('pesquisa').setValue('');
+          },
+          listeners: {
+            change: {
+              buffer: 1000,
+              fn: function(){
+                var page = 1, valores = ['sistema', 'funcao', 'comando', 'autor'], Avalores = new Object();
+                function seletor(value){
+                  return Ext.ComponentQuery.query('maingridview [itemId='+value+']')[0];
+                };
+                Ext.Array.each(valores, function(e){
+                  if(seletor(e).checked){
+                    var value = seletor(e).itemId;
+                    Avalores[value] = seletor(e).itemId;
+                  }
+                });
+                Avalores['search'] = Ext.getCmp('pesquisa').getValue();
+                Avalores['sort'] = false;
+                var store = Ext.ComponentQuery.query('maingridview')[0].getStore();
+                store.clearFilter();
+                if(Ext.getCmp('pesquisa').getValue() === ''){
+                  store.proxy.extraParams = null;
+                  store.loadPage(page, Avalores);
+                }else{
+                  store.proxy.extraParams = Avalores;
+                  store.loadPage(page, Avalores);
                 }
-            },
-            name: 'pesquisa',
-            emptyText: 'Pesquisa',
-            handler: 'onTeste'
-            /*
-            onTriggerClick: function(field, trigger, e){
-              Ext.getCmp('pesquisa').setValue('');
-            },
-            */            
+              }
+            }
+          }
         }]
-    }],
+      },{
+        glyph:'f14a',
+        menu: [
+          { xtype: 'menucheckitem', text: 'Selecione',
+            handler: function(item, e){
+              if(item.checked){
+                item.setText('Desselecionar');
+              }else{
+                item.setText('Selecionar');
+              }
+              var valores = ['sistema','funcao','comando','autor'];
+              function seletor(value){
+                return Ext.ComponentQuery.query('maingridview [itemId='+value+']')[0];
+              };
+              Ext.Array.each(valores, function(e){
+                if(item.checked){
+                  seletor(e).setChecked(true);
+                }else{
+                  seletor(e).setChecked(false);
+                }
+              });
+            }
+          },'-',
+          { itemId: 'sistema', xtype: 'menucheckitem', text: 'sistema'},
+          { itemId: 'funcao', xtype: 'menucheckitem', text: 'funcao'},
+          { itemId: 'comando', xtype: 'menucheckitem', text: 'comando'},
+          { itemId: 'autor', xtype: 'menucheckitem', text: 'autor'}
+        ]
+      }],
 
-    dockedItems: [{
+    bbar: [{
         xtype: 'pagingtoolbar',
-        //store: productStore,
-        dock: 'bottom',
-        displayInfo: true
+        bind:{
+            store: '{MainListStore}'
+        },
+        displayInfo: true,
+        displayMsg: 'Registros {0} - {1} de {2}',
+        emptyMsg: "Nenhum registro encontrado."
     }]
 
 });

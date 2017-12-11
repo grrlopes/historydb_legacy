@@ -21,8 +21,8 @@ $autor = '$data->autor';
 $comando = $data->comando;
 $data = new MongoDB\BSON\UTCDateTime;
 $Dados = [
-    'funcao' => "$funcao", 'sistema' => "$funcao", 
-    'autor' => "$autor", 'comando' => "$comando", 
+    'funcao' => "$funcao", 'sistema' => "$sistema",
+    'autor' => "$autor", 'comando' => "$comando",
 ];
 $systemc->ExeCriacao('comandos', $Dados);
 echo json_encode(array(
