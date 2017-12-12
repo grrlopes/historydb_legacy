@@ -17,7 +17,6 @@ $systeml->ExecPagingQtd('comandos');
 $systeml->SetPaging($start, $limit);
 $total = $systeml->ObterTotal();
 if(empty($search) && $page <= 1){
-    #$systeml->SetPaging($start, $limit);
     $systeml->ExecutaFind('comandos', 'agrega');
     $valor = $systeml->Obter();
     echo json_encode(array(
@@ -26,7 +25,6 @@ if(empty($search) && $page <= 1){
         "dados" => $valor
     ));
 }else if(empty($search) && $page > 1){
-    #$systeml->SetPaging($start, $limit);
     $systeml->ExecPaging('comandos');
     $valor = $systeml->Obter();
     echo json_encode(array(
@@ -34,12 +32,22 @@ if(empty($search) && $page <= 1){
         "total" => $total,
         "dados" => $valor
     ));
-}else if(isset($search)){
+}else if(isset($search) && $page <= 1){
     $checkbox = [$funcao, $sistema, $comando, $autor];
-    #$systeml->SetPaging($start, $limit);
     $systeml->ExecSearchQtd('comandos', $search, $checkbox);
     $totalsearch = $systeml->ObterTotal();
     $systeml->ExecSearch('comandos', $search, $checkbox);
+    $valor = $systeml->Obter();
+    echo json_encode(array(
+        "success" => true,
+        "total" => $totalsearch,
+        "dados" => $valor
+    ));
+}else if(isset($search) && $page > 1){
+    $checkbox = [$funcao, $sistema, $comando, $autor];
+    $systeml->ExecSearchQtd('comandos', $search, $checkbox);
+    $totalsearch = $systeml->ObterTotal();
+    $systeml->ExecSearchPaging('comandos', $search, $checkbox);
     $valor = $systeml->Obter();
     echo json_encode(array(
         "success" => true,

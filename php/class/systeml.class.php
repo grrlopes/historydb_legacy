@@ -83,6 +83,29 @@ class systeml extends conexao{
         $this->Executar();
     }
 
+    public function ExecSearchPaging($colecao, $search, array $check){
+        $this->Colecao = $colecao;
+        $this->Search = $search;
+        foreach ($check as $key => $valor){
+            switch ($valor){
+                case 'comando':
+                    $check[$key] = 'comando.comando';
+                    break;
+                case 'autor':
+                    $check[$key] = 'comando.autor';
+                    break;
+            }
+            if(!isset($valor)){
+                unset($check[$key]);
+            }
+        }
+        $this->SearchCheck = $check;
+        $this->Principal = true;
+        $this->ValidExec = true;
+        $this->TerSyntaxSearchPaging();
+        $this->Executar();
+    }
+
     public function ExecSearchQtd($colecao, $search, array $check){
         $this->Colecao = $colecao;
         $this->Search = $search;
@@ -202,6 +225,40 @@ class systeml extends conexao{
         ]);
     }
 
+    private function TerSyntaxSearchPaging(){
+        $this->Sintaxe = parent::$Db.".".$this->Colecao;
+        $this->Resultado = array(
+            array('$unwind' => '$comando'),
+            array('$match' => array(
+                    '$and' => array(
+                        array(
+                            'comando.principal' => Array ('$in' => Array (0 => true))
+                        )
+                    ),
+                ),
+            ),
+            ['$skip' => $this->Start],
+            ['$limit' => $this->Limit]
+        );
+        $query = array('$or' => array());
+        foreach ($this->SearchCheck as $valor){
+            array_push($query['$or'], array(
+                $valor => array(
+                    '$in' => Array(
+                        new MongoDB\BSON\Regex($this->Search,"i")
+                    )
+                )
+            ));
+            $this->Resultado[1]['$match'] = array_merge(
+                $this->Resultado[1]['$match'], $query
+            );
+        }
+        $this->Query = new \MongoDB\Driver\Command([
+            'aggregate' => 'comandos',
+            'pipeline' => $this->Resultado
+        ]);
+    }
+
     private function TerSyntaxPagingTotal(){
         $this->Sintaxe = parent::$Db.".".$this->Colecao;
         $pipeline = [
@@ -228,23 +285,24 @@ class systeml extends conexao{
         $this->Sintaxe = parent::$Db.".".$this->Colecao;
         $this->Resultado = array(
             array('$unwind' => '$comando'),
-            array('$match' =>
-                Array(
-                    'comando.principal' => Array ('$in' => Array (0 => true))
+            array('$match' => array(
+                    '$and' => array(
+                        array(
+                            'comando.principal' => Array ('$in' => Array (0 => true))
+                        )
+                    ),
                 ),
-            ),
-            array('$skip' => $this->Start),
-            array('$limit' => $this->Limit)
+            )
         );
+        $query = array('$or' => array());
         foreach ($this->SearchCheck as $valor){
-            $query = array(
-                $valor =>
-                Array(
+            array_push($query['$or'], array(
+                $valor => array(
                     '$in' => Array(
                         new MongoDB\BSON\Regex($this->Search,"i")
                     )
                 )
-            );
+            ));
             $this->Resultado[1]['$match'] = array_merge(
                 $this->Resultado[1]['$match'], $query
             );
@@ -259,22 +317,25 @@ class systeml extends conexao{
         $this->Sintaxe = parent::$Db.".".$this->Colecao;
         $this->Resultado = array(
             array('$unwind' => '$comando'),
-            array('$match' =>
-                Array(
-                    'comando.principal' => Array ('$in' => Array (0 => true))
+            array('$match' => array(
+                    '$and' => array(
+                        array(
+                            'comando.principal' => Array ('$in' => Array (0 => true))
+                        )
+                    ),
                 ),
             ),
             array('$group' => array('_id' => null, 'total' => array('$sum' => 1))),
         );
+        $query = array('$or' => array());
         foreach ($this->SearchCheck as $valor){
-            $query = array(
-                $valor =>
-                Array(
+            array_push($query['$or'], array(
+                $valor => array(
                     '$in' => Array(
                         new MongoDB\BSON\Regex($this->Search,"i")
                     )
                 )
-            );
+            ));
             $this->Resultado[1]['$match'] = array_merge(
                 $this->Resultado[1]['$match'], $query
             );
