@@ -9,7 +9,7 @@ Ext.define('hdb.view.login.LoginViewModel', {
             proxy: {
                 type: 'rest',
                 api: {
-                    read: 'php/login/getLogin.php',
+                    read: 'php/login/getLogin.php'
                 },
                 reader: {
                     type: 'json',

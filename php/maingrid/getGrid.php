@@ -4,6 +4,9 @@
  * @email   gabrielrrlopes@gmail.com
  **/
 require_once '../config.inc.php';
+session_start();
+if(!isset($_SESSION['user']) &&
+!isset($_SESSION['pass'])) return;
 $funcao = filter_input(INPUT_GET,'funcao');
 $sistema = filter_input(INPUT_GET,'sistema');
 $autor = filter_input(INPUT_GET,'autor');

@@ -4,6 +4,9 @@
  * @email   gabrielrrlopes@gmail.com
  **/
 require_once '../config.inc.php';
+session_start();
+if(!isset($_SESSION['user']) &&
+!isset($_SESSION['pass'])) return;
 $systemc = new systemc;
 $dados = filter_input(INPUT_POST,'dados');
 function replace_unicode_escape_sequence($match){
@@ -17,7 +20,7 @@ function unicode_decode($str){
 $data = json_decode(unicode_decode($dados));
 $funcao = $data->funcao;
 $sistema = $data->sistema;
-$autor = '$data->autor';
+$autor = $_SESSION['user'];
 $comando = $data->comando;
 $data = new MongoDB\BSON\UTCDateTime;
 $Dados = [

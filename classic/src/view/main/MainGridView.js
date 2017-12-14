@@ -152,7 +152,7 @@ Ext.define('hdb.view.main.MainGridView', {
           },'-',
           { itemId: 'sistema', xtype: 'menucheckitem', text: 'sistema'},
           { itemId: 'funcao', xtype: 'menucheckitem', text: 'funcao'},
-          { itemId: 'comando', xtype: 'menucheckitem', text: 'comando'},
+          { itemId: 'comando', xtype: 'menucheckitem', text: 'comando', checked: true},
           { itemId: 'autor', xtype: 'menucheckitem', text: 'autor'}
         ]
       }],

@@ -23,6 +23,7 @@ Ext.define('hdb.view.login.LoginController', {
                         Ext.widget(
                             'mainview'
                         );
+                        window.location.reload();
                         break;
                     case 'novalido':
                         Ext.Msg.show({
