@@ -12,20 +12,25 @@ Ext.define('hdb.view.main.MainGridView', {
             disabled: true
         },{
             xtype: 'button',
-            text: 'Logoff',
+            text: 'Exit',
             glyph: 'f08b',
             handler: 'onLogOff'
-        }]
+        }],
+      tools: [{
+        glyph: 'f143',
+        tooltip: 'CLICK !!! Ajude a melhorar, deixe sua opnião.',
+        callback: function(){}
+      }]
     },
 
     bind: {
-        store: '{MainListStore}'
+      store: '{MainListStore}'
     },
 
     controller: 'mainviewctrl',
 
     viewModel: {
-        type: 'MainViewModel' 
+      type: 'MainViewModel'
     },
 
     viewConfig : {

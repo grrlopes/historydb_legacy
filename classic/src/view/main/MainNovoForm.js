@@ -6,7 +6,7 @@ Ext.define('hdb.view.main.MainNovoForm', {
 
     title: 'Novo registro',
     width: 710,
-    height: 470,
+    height: 600,
     maxWidth: 1200,
     maxHeight: 800,
     minWidth: 500,
@@ -48,6 +48,7 @@ Ext.define('hdb.view.main.MainNovoForm', {
             xtype: 'htmleditor',
             name: 'comando',
             fieldLabel: 'Comando',
+            height: 410,
             autoHeight: true,
             resizable: true,
             allowBlank: false

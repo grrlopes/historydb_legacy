@@ -11,10 +11,14 @@ Ext.define('hdb.view.main.MainFormWin', {
         type: 'MainViewModel'
     },
 
+    viewConfig: {
+        enableTextSelection: true
+    },
+
     width: 710,
-    height: 470,
-    maxWidth: 800,
-    maxHeight: 500,
+    height: 600,
+    maxWidth: 1200,
+    maxHeight: 800,
     minWidth: 500,
     minHeight: 300,
 
@@ -29,7 +33,7 @@ Ext.define('hdb.view.main.MainFormWin', {
     items: [{
         region: 'center',
         xtype: 'tabpanel',
-        activeTab: 1,
+        activeTab: 0,
         split: false,
         border: false,
         defaults: {
@@ -48,7 +52,7 @@ Ext.define('hdb.view.main.MainFormWin', {
                     xtype: 'hidden',
                     name: '_id'
                 },{
-                    xtype: 'textfield',
+                    xtype: 'hidden',
                     name: 'autor',
                     fieldLabel: 'Autor',
                     allowBlank: false,
@@ -68,7 +72,9 @@ Ext.define('hdb.view.main.MainFormWin', {
                     xtype: 'htmleditor',
                     name: 'comando',
                     fieldLabel: 'Comando',
-                    height: 188,
+                    autoHeight: true,
+                    height: 370,
+                    resizable: true,
                     allowBlank: false
                 }],
                 buttons: [{

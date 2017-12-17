@@ -27,6 +27,7 @@ Ext.define('hdb.view.main.MainController', {
                 Ext.widget(
                     'loginview'
                 )
+                Ext.getBody().unmask();
             }
           }
         });
@@ -51,10 +52,6 @@ Ext.define('hdb.view.main.MainController', {
         store.load({
             params:{_id: record.get('_id'), dados: 'formGrid'}
         });
-    },
-
-    onTeste: function(){
-        Ext.getCmp('pesquisa').setValue('');
     },
 
     onEditForm: function(btn, e, eOpts){
