@@ -21,7 +21,7 @@ $data = json_decode(unicode_decode($dados));
 $_id = $data->_id;
 $funcao = $data->funcao;
 $sistema = $data->sistema;
-$autor = $data->autor;
+$autor = $_SESSION['user'];
 $comando = $data->comando;
 $Dados = [
     '_id' => "$_id", 'autor' => "$autor",

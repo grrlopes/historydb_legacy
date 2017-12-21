@@ -48,8 +48,8 @@ Ext.define('hdb.view.main.MainGridView', {
         width: 200,
         align: 'center'
     },{
-        header: 'Editor(a)',
-        dataIndex: 'autor',
+        header: 'Modificado',
+        dataIndex: 'cautor',
         width: 150,
         align: 'center'
     },{
@@ -57,11 +57,6 @@ Ext.define('hdb.view.main.MainGridView', {
         dataIndex: 'comando',
         align: 'left',
         flex: 1
-    },{
-        header: 'Revisão',
-        dataIndex: '',
-        width: 80,
-        align: 'center'
     },{
         header: 'Autor',
         dataIndex: 'autor',

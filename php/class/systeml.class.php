@@ -154,6 +154,7 @@ class systeml extends conexao{
     public function Obter(){
         foreach ($this->Leitura as $key => $valor){
             foreach ($valor->result as $key2 => $valor2){
+                $cautor = $valor2->comando->autor;
                 foreach ($valor2->comando->cdata as $key3 => $valor3){
                     $data = new MongoDB\BSON\UTCDateTime($valor3);
                     $datatime = $data->toDateTime();
@@ -163,6 +164,7 @@ class systeml extends conexao{
                     $valor2->_id = $valor4;
                 }
                 $valor2->comando = $valor2->comando->comando;
+                $valor2->cautor = $cautor;
             }
             return $valor->result;
         }

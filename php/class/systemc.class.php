@@ -46,13 +46,13 @@ class systemc extends conexao{
             'data' => $this->TerData(),
             'comando' => [
                 [
-                    'autor' => 'grrodrigues', 'comando' => $this->Dados['comando'],
+                    'autor' => $this->Dados['autor'], 'comando' => $this->Dados['comando'],
                     'principal' => true, 'cdata' => $this->TerData()
                 ]
             ],
             'funcao' => $this->Dados['funcao'],
             'sistema' => $this->Dados['sistema'],
-            'autor' => 'grrodrigues'
+            'autor' => $this->Dados['autor']
         ];
         $this->Criacao->insert($this->Query);
     }
