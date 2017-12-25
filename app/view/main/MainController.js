@@ -37,11 +37,21 @@ Ext.define('hdb.view.main.MainController', {
         var win = btn.up('window'),
             form = win.down('form'),
             store = Ext.ComponentQuery.query('maingridview')[0].getStore(),
-            //store = this.getViewModel().getStore('MainNovoCadStore'),
-            //store = this.getViewModel().getStore('MainListStore'),
             valor = form.getForm().getValues();
-            store.insert(0, valor);
-            store.sync();
+        Ext.MessageBox.show({
+            icon: Ext.Msg.QUESTION,
+            closable: false,
+            title: 'Atenção',
+            msg: 'As informações estão corretas ?',
+            buttons: Ext.MessageBox.YESNO,
+            fn: function(btn, env){
+                if(btn == 'yes'){
+                    store.insert(0, valor);
+                    store.sync();
+                    form.reset();
+                }
+            }
+        })
     },
 
     onReloadForm: function(btn, e, eOpts){
@@ -60,8 +70,20 @@ Ext.define('hdb.view.main.MainController', {
             store = Ext.ComponentQuery.query('maingridview')[0].getStore(),
             record = form.getRecord(),
             valor = form.getValues();
-        record.set(valor);
-        store.sync();
+        Ext.MessageBox.show({
+            icon: Ext.Msg.WARNING,
+            closable: false,
+            title: 'Alterar',
+            msg: 'Tem certeza que deseja alterar ?',
+            buttons: Ext.MessageBox.YESNO,
+            fn: function(btn, env){
+                if(btn == 'yes'){
+                    record.set(valor);
+                    store.sync();
+                    win.close();
+                }
+            }
+        })
     },
 
     onSelect: function (grid, record, index, eOpts){
