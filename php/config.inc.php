@@ -22,4 +22,5 @@ function __autoload($Class){
         }
         $idir = TRUE;
     }
+    include_once __DIR__ . "//vendor//autoload.php";
 }

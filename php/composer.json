@@ -1,0 +1,16 @@
+{
+    "name": "grrlopes/historydb",
+    "description": "Sistema de persistencia de comandos",
+    "type": "metapackage",
+    "authors": [
+        {
+            "name": "Gabriel Lopes",
+            "email": "gabrielrrlopes@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php":  ">=5.3.3",
+        "sebastian/diff": "^2.0"
+    }
+}

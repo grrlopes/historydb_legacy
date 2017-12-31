@@ -8,6 +8,7 @@ session_start();
 if(!isset($_SESSION['user']) &&
 !isset($_SESSION['pass'])) return;
 $systemu = new systemu;
+use SebastianBergmann\Diff\Differ;
 $dados = filter_input(INPUT_POST,'dados');
 function replace_unicode_escape_sequence($match){
     return mb_convert_encoding(pack(

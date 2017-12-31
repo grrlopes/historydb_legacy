@@ -79,11 +79,6 @@ Ext.define('hdb.view.main.MainGridView', {
         text: 'Novo',
         glyph: 'f055',
         handler: 'onNovoForm'
-    },'-',{
-        text: 'Remover',
-        glyph: 'f056',
-        handler: 'onRemoveClick',
-        disabled: true
     },'->',{
         xtype: 'toolbar',
         margin: 'left',
