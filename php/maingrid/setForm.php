@@ -25,7 +25,7 @@ $sistema = $data->sistema;
 $autor = $_SESSION['user'];
 $comando = $data->comando;
 $Dados = [
-    '_id' => "$_id", 'autor' => "$autor",
+    '_id' => "$_id", 'autor' => "$autor", 'funcao' => $funcao,
     'comando' => "$comando", 'principal' => true,
     'cdata' => new MongoDB\BSON\UTCDateTime
 ];

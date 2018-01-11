@@ -43,8 +43,9 @@ class systemu extends conexao{
             ['_id' => new MongoDB\BSON\ObjectId($this->Id),
             'comando' => ['$elemMatch' => ["principal" => ['$eq' => true]]]
             ],
-            ['$set' => ['comando.$.principal' => false]]
+            ['$set' => ['comando.$.principal' => false, 'funcao' => $this->Dados['funcao']]]
         );
+        unset($this->Dados['funcao']);
     }
 
     private function Executar(){
