@@ -9,11 +9,7 @@ Ext.define('hdb.Application', {
     name: 'hdb',
 
     requires: [
-        'hdb.view.login.Login',
-        'hdb.view.main.MainView',
-
-        'hdb.view.main.MainController',
-        'hdb.view.main.MainGridView'
+        'hdb.view.main.MainController'
     ],
 
     stores: [

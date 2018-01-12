@@ -1,10 +1,6 @@
 Ext.define('hdb.view.main.MainController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.mainviewctrl',
-    requires: [
-        'hdb.view.main.MainFormWin',
-        'hdb.view.main.MainNovoForm'
-    ],
 
     onNovoForm: function(){
         var win = Ext.create('hdb.view.main.MainNovoForm');
