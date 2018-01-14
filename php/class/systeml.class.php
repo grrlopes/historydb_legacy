@@ -292,9 +292,10 @@ class systeml extends conexao{
                         array(
                             'comando.principal' => Array ('$in' => Array (0 => true))
                         )
-                    ),
-                ),
-            )
+                    )
+                )
+            ),
+            ['$limit' => $this->Limit]
         );
         $query = array('$or' => array());
         foreach ($this->SearchCheck as $valor){
