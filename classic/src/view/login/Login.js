@@ -23,17 +23,15 @@ Ext.define('hdb.view.login.Login', {
         split: false,
         border: false,
         defaults: {
-            layout: 'fit'
+            layout: 'fit',
+            bodyPadding: 10,
         },
         items: [{
             title: 'Login',
             items: [{
-                width: 375,
-                height: 190,
+                width: 345,
+                height: 150,
                 xtype: 'form',
-                defaults: {
-                    labelAlign: 'top'
-                },
                 items: [{
                     xtype: 'textfield',
                     name: 'user',
@@ -58,14 +56,11 @@ Ext.define('hdb.view.login.Login', {
                 }]
             }]
         },{
-            title: 'Cadastro',
+            title: 'Novo cadastro',
             items: [{
-                width: 375,
-                height: 250,
+                width: 345,
+                height: 150,
                 xtype: 'form',
-                defaults: {
-                    labelAlign: 'top'
-                },
                 items: [{
                     xtype: 'textfield',
                     name: 'user',
@@ -84,10 +79,10 @@ Ext.define('hdb.view.login.Login', {
                     allowBlank: false
                 }],
                 buttons: [{
-                    text: 'Cadastro',
+                    text: 'Cadastrar',
                     formBind: true,
                     listeners: {
-                        click: 'onCadastro'
+                        click: 'onCadastraLogin'
                     }
                 }]
             }]
