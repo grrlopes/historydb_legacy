@@ -21,6 +21,13 @@ class systemc extends conexao{
         $this->Executar();
     }
 
+    public function ExeCriaLogin($colecao, array $query){
+        $this->Colecao = $colecao;
+        $this->Dados = $query;
+        $this->TerSyntaxLogin();
+        $this->Executar();
+    }
+
     public function ObterOid(){
         return (string)$this->Oid;
     }
@@ -53,6 +60,17 @@ class systemc extends conexao{
             'funcao' => $this->Dados['funcao'],
             'sistema' => $this->Dados['sistema'],
             'autor' => $this->Dados['autor']
+        ];
+        $this->Criacao->insert($this->Query);
+    }
+
+    private function TerSyntaxLogin(){
+        $this->Sintaxe = parent::$Db.".".$this->Colecao;
+        $this->Criacao = new MongoDB\Driver\BulkWrite;
+        $this->Query = [
+            'usuario' => $this->Dados['usuario'],
+            'senha' => $this->Dados['senha'],
+            'criado' => $this->TerData()
         ];
         $this->Criacao->insert($this->Query);
     }

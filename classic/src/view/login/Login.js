@@ -24,7 +24,7 @@ Ext.define('hdb.view.login.Login', {
         border: false,
         defaults: {
             layout: 'fit',
-            bodyPadding: 10,
+            bodyPadding: 10
         },
         items: [{
             title: 'Login',
@@ -56,7 +56,7 @@ Ext.define('hdb.view.login.Login', {
                 }]
             }]
         },{
-            title: 'Novo cadastro',
+            title: 'Não tenho cadastro',
             items: [{
                 width: 345,
                 height: 150,
@@ -75,6 +75,7 @@ Ext.define('hdb.view.login.Login', {
                 },{
                     xtype: 'textfield',
                     name: 'cpass',
+                    inputType: 'password',
                     fieldLabel: 'Confirme senha',
                     allowBlank: false
                 }],
@@ -82,7 +83,7 @@ Ext.define('hdb.view.login.Login', {
                     text: 'Cadastrar',
                     formBind: true,
                     listeners: {
-                        click: 'onCadastraLogin'
+                        click: 'onNovoLogin'
                     }
                 }]
             }]

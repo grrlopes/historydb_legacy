@@ -46,5 +46,31 @@ Ext.define('hdb.view.login.LoginController', {
                 console.log('falha');
             }
         });
+    },
+
+    onNovoLogin: function(btn, event, Opts){
+        var form = btn.up('form'),
+            valores = form.getForm().getValues();
+        if(valores.pass !== valores.cpass){
+            Ext.Msg.show({
+                msg: 'Senha não confere!!!',
+                icon: Ext.Msg.WARNING,
+                closable: false,
+                buttons: Ext.Msg.OK
+            });
+            return false;
+        }
+        console.log(valores);
+        Ext.Ajax.request({
+            url: 'php/login/setLogin.php',
+            params: {
+                usuario: valores.user,
+                senha: valores.pass,
+                csenha: valores.cpass
+            },
+            success: function(conn, response, options, eOpts){
+
+            }
+        })
     }
 });
