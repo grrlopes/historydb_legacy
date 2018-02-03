@@ -11,4 +11,16 @@ $Dados = [
     'usuario' => "$usuario",
     'senha' => "$senha"
 ];
-$systemc->ExeCriaLogin('login', $Dados);
+$systemc->ExecValid('login', $usuario);
+if(!$systemc->obterValid()['existe']){
+    $systemc->ExeCriaLogin('login', $Dados);
+    echo json_encode(array(
+        "success" => true,
+        "msg" => 'noexiste',
+    ));
+}else{
+    echo json_encode(array(
+        "success" => false,
+        "msg" => 'existe',
+    ));
+}

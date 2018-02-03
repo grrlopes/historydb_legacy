@@ -43,7 +43,13 @@ Ext.define('hdb.view.login.LoginController', {
                 }
             },
             failure: function(conn, response, options, eOpts){
-                console.log('falha');
+                var result = Ext.JSON.decode(conn.responseText, true);
+                Ext.Msg.show({
+                    msg: result,
+                    icon: Ext.Msg.INFO,
+                    closable: false,
+                    buttons: Ext.Msg.OK
+                });
             }
         });
     },
@@ -60,7 +66,6 @@ Ext.define('hdb.view.login.LoginController', {
             });
             return false;
         }
-        console.log(valores);
         Ext.Ajax.request({
             url: 'php/login/setLogin.php',
             params: {
@@ -69,7 +74,38 @@ Ext.define('hdb.view.login.LoginController', {
                 csenha: valores.cpass
             },
             success: function(conn, response, options, eOpts){
-
+                var result = Ext.JSON.decode(conn.responseText, true);
+                switch(result.msg){
+                    case 'existe':
+                        Ext.Msg.show({
+                            msg: 'Esse login já existe!',
+                            icon: Ext.Msg.WARNING,
+                            closable: false,
+                            buttons: Ext.Msg.OK
+                        });
+                        break;
+                    case 'noexiste':
+                        Ext.Msg.show({
+                            msg: 'Login cadastrado!',
+                            icon: Ext.Msg.INFO,
+                            closable: false,
+                            buttons: Ext.Msg.OK,
+                            fn: function(btn, ev){
+                                if(btn === 'ok'){
+                                    form.getForm().reset();
+                                }
+                            }
+                        });
+                }
+            },
+            failure: function(conn, response, options, eOpts){
+                var result = Ext.JSON.decode(conn.responseText, true);
+                Ext.Msg.show({
+                    msg: result,
+                    icon: Ext.Msg.INFO,
+                    closable: false,
+                    buttons: Ext.Msg.OK
+                });
             }
         })
     }

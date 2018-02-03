@@ -11,6 +11,9 @@ class systemc extends conexao{
     private $Qdados;
     private $Query;
     private $Sintaxe;
+    private $Leitura;
+    private $ValidExec;
+    private $User;
     private $Datas;
     private $Oid;
 
@@ -38,6 +41,31 @@ class systemc extends conexao{
                 return $data;
             }
         }
+    }
+
+    public function ExecValid($colecao, $user){
+        $this->Colecao = $colecao;
+        $this->User = $user;
+        $this->ValidExec = true;
+        $this->TerSyntaxValid();
+        $this->Executar();
+        $this->ValidExec = false;
+    }
+
+    public function obterValid(){
+        foreach ($this->Leitura as $key => $valor){
+            if(isset($valor->usuario)){
+                return array("existe" => true, "success" => false);
+            }
+        }
+        return array("existe" => false, "success" => true);
+    }
+
+    private function TerSyntaxValid(){
+        $this->Sintaxe = parent::$Db.".".$this->Colecao;
+        $filtro = ['usuario' => $this->User];
+        $opt = ['projection' => ['_id' => 0]];
+        $this->Query = new MongoDB\Driver\Query($filtro, $opt);
     }
 
     private function TerConexao(){
@@ -69,7 +97,8 @@ class systemc extends conexao{
         $this->Criacao = new MongoDB\Driver\BulkWrite;
         $this->Query = [
             'usuario' => $this->Dados['usuario'],
-            'senha' => $this->Dados['senha'],
+            'senha' => md5($this->Dados['senha']),
+            'acesso' => ['level' => 'user'],
             'criado' => $this->TerData()
         ];
         $this->Criacao->insert($this->Query);
@@ -91,8 +120,12 @@ class systemc extends conexao{
     private function Executar(){
         try{
             $this->TerConexao();
-            $writeConcern = new MongoDB\Driver\WriteConcern(MongoDB\Driver\WriteConcern::MAJORITY, 100);
-            $eu = $this->Conexao->executeBulkWrite($this->Sintaxe, $this->Criacao, $writeConcern);
+            if($this->ValidExec){
+                $this->Leitura = $this->Conexao->executeQuery($this->Sintaxe, $this->Query);
+            }else{
+                $writeConcern = new MongoDB\Driver\WriteConcern(MongoDB\Driver\WriteConcern::MAJORITY, 100);
+                $this->Conexao->executeBulkWrite($this->Sintaxe, $this->Criacao, $writeConcern);
+            }
         }catch(MongoDB\Driver\Exception\Exception $e){
             var_dump($e);
         }

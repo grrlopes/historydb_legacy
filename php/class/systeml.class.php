@@ -35,7 +35,7 @@ class systeml extends conexao{
         $this->Limit = (int) $limit;
     }
 
-    public function ExecLogin($colecao, $user, $pass){
+    public function ExecLogin($colecao, $user, $pass = null){
         $this->Colecao = $colecao;
         $this->User = $user;
         $this->Pwd = $pass;
