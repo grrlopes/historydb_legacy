@@ -533,7 +533,7 @@
                 "locale"
             ],             
             
-            "theme": "theme-neptune",
+            "theme": "theme-aria",
             
             "sass": {
                 "generated": {
