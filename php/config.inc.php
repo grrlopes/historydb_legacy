@@ -10,7 +10,7 @@ define("USER", "");
 define("SENHA", "");
 define("TZONE", "America/Sao_Paulo");
 
-function __autoload($Class){
+spl_autoload_register(function($Class){
     $dir = ['class'];
     $idir = null;
     foreach($dir as $dirnome){
@@ -23,4 +23,4 @@ function __autoload($Class){
         $idir = TRUE;
     }
     include_once __DIR__ . "//vendor//autoload.php";
-}
+});
