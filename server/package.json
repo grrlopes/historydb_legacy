@@ -1,0 +1,33 @@
+{
+  "name": "historydb",
+  "version": "1.0.0",
+  "description": "That server will store and provide through an api some informations as command line, sql/nosql query and so on",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "prod": "./node_modules/.bin/pm2 start app.js --name historydb"
+  },
+  "keywords": [
+    "node",
+    "history",
+    "historydb",
+    "npm",
+    "command"
+  ],
+  "author": "Gabriel Lopes",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.3",
+    "pm2": "^4.2.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
