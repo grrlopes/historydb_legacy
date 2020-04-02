@@ -16,3 +16,5 @@ sass/example/example.css
 sass/example/bootstrap.js
 vendor/
 node_modules/
+.vscode/
+package-lock.json
