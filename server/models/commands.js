@@ -21,4 +21,4 @@ const commandSchema = new Schema(
 	{ timestamps: true }
 );
 
-module.exports = mongoose.model('Commands', commandSchema);
+module.exports = mongoose.model('Posts', commandSchema);
