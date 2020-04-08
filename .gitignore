@@ -17,3 +17,5 @@ sass/example/bootstrap.js
 teste2.php
 teste1.php
 vendor/
+server/node_modules
+.vscode/
