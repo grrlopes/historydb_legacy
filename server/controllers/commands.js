@@ -45,4 +45,37 @@ exports.getCommand = (req, res, next) => {
 			}
 			res.json({ message: err.message, code: err.statusCode })
 		});
+};
+
+exports.getCommandsSearch = (req, res, next) => {
+	let total;
+	Commands.aggregate([
+		{
+			$match: {
+				$and: [{
+					"commands.main": {
+						$in: [true]
+					}
+				}]
+			}
+		},
+		{ $limit: 3 },
+		{ $count: "total" },
+	]).then(count => {
+		total = count;
+		return Commands.aggregate([
+			{ $unwind: "$commands" },
+			{
+				$match: {
+					$and: [{
+						"commands.main": {
+							$in: [true]
+						}
+					}]
+				}
+			},
+			{ $limit: 3 }])
+	}).then(result => {
+		res.json({total: total[0].total, data: result });
+	})
 }
