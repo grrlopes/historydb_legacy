@@ -5,10 +5,11 @@ Ext.define('hdb.model.MainGrid', {
     },
     fields: [
         { name: '_id', type: 'string' },
-        { name: 'autor', type: 'string' },
-        { name: 'sistema', type: 'string' },
-        { name: 'funcao', type: 'string' },
-        { name: 'comando', type: 'string' },
-        { name: 'data', type: 'date' }
+        { name: 'author', type: 'string' },
+        { name: 'title', type: 'string' },
+        { name: 'definition', type: 'string' },
+        { name: 'command', type: 'string' },
+        { name: 'created', type: 'date' },
+        { name: 'updated', type: 'date' }
     ]
 });

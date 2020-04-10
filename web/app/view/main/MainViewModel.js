@@ -10,13 +10,13 @@ Ext.define('hdb.view.main.MainViewModel', {
             proxy: {
                 type: 'rest',
                 api: {
-                    read: 'php/maingrid/getGrid.php',
+                    read: 'http://localhost:8080/api/commands',
                     update: 'php/maingrid/setForm.php',
                     create: 'php/maingrid/setNovoCad.php'
                 },
                 reader: {
                     type: 'json',
-                    rootProperty: 'dados'
+                    rootProperty: 'data'
                 },
                 writer: {
                     type: 'json',

@@ -38,38 +38,45 @@ Ext.define('hdb.view.main.MainGridView', {
     },
 
     columns: [{
-        header: 'Sistema',
-        dataIndex: 'sistema',
+        header: 'Title',
+        dataIndex: 'title',
         width: 200,
         align: 'center'
     },{
-        header: 'Função',
-        dataIndex: 'funcao',
+        header: 'Definition',
+        dataIndex: 'definition',
         width: 200,
         align: 'center'
     },{
-        header: 'Modificado',
-        dataIndex: 'cautor',
+        header: 'Edited by',
+        dataIndex: 'cmd_author',
         width: 150,
         align: 'center'
     },{
-        header: 'Comando',
-        dataIndex: 'comando',
+        header: 'Command',
+        dataIndex: 'command',
         align: 'left',
         flex: 1
     },{
-        header: 'Autor',
-        dataIndex: 'autor',
+        header: 'Author',
+        dataIndex: 'author',
         width: 150,
         align: 'center'
     },{
-        header: 'Data',
-        dataIndex: 'data',
+        header: 'Created',
+        dataIndex: 'createdAt',
         align: 'center',
         width: 135,
         xtype: 'datecolumn',
         format: 'd-m-Y H:i' 
-    }],
+    },{
+      header: 'Updated',
+      dataIndex: 'updatedAt',
+      align: 'center',
+      width: 135,
+      xtype: 'datecolumn',
+      format: 'd-m-Y H:i'
+  }],
 
     listeners: {
         rowdblclick: 'onSelect'
