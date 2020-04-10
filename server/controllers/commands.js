@@ -5,27 +5,54 @@ exports.getCommands = (req, res, next) => {
 	const limit = req.query.limit;
 	const start = req.query.start;
 	let total;
-	Commands.find().countDocuments()
-		.then(count => {
-			total = count;
-			return Commands.find()
-				.skip((currentPage - 1) * start)
-				.limit(parseInt(limit));
-		})
-		.then(result => {
-			if (result === null || result.length == 0) {
-				const error = new Error('There are not records.');
-				error.statusCode = 404;
-				throw error;
-			};
-			res.json({ data: result, total: total });
-		})
-		.catch(error => {
-			if (!error.statusCode) {
-				error.statusCode = 500;
+	Commands.aggregate([
+		{
+			$match: {
+				"commands.main": {
+					$in: [true]
+				}
 			}
-			res.json({ message: err.message, code: err.statusCode })
-		});
+		},
+		{ $count: "total" },
+	]).then(count => {
+		if (count === null || count.length == 0) {
+			const error = new Error('There are not records.');
+			error.statusCode = 404;
+			throw error;
+		}
+		total = count[0].total
+		return Commands.aggregate([
+			{ $unwind: "$commands" },
+			{
+				$match: {
+					"commands.main": {
+						$in: [true]
+					}
+				}
+			},
+			{
+				$project: {
+					author: 1,
+					title: 1,
+					definition: 1,
+					cmd_author: "$commands.author",
+					command: "$commands.command",
+					cmd_created_at: "$commands.createdAt",
+					createdAt: 1,
+					updatedAt: 1
+				}
+			},
+			{ $skip: parseInt(start) },
+			{ $limit: parseInt(limit) },
+		])
+	}).then(result => {
+		res.json({ total: total, data: result });
+	}).catch(error => {
+		if (!error.statusCode) {
+			error.statusCode = 500;
+		}
+		res.json({ message: error.message, code: error.statusCode })
+	});
 };
 
 exports.getCommand = (req, res, next) => {
@@ -76,6 +103,6 @@ exports.getCommandsSearch = (req, res, next) => {
 			},
 			{ $limit: 3 }])
 	}).then(result => {
-		res.json({total: total[0].total, data: result });
+		res.json({ total: total[0].total, data: result });
 	})
 }
