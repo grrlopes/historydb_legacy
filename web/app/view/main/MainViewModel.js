@@ -50,6 +50,28 @@ Ext.define('hdb.view.main.MainViewModel', {
                     update: 'POST'
                 }
             }
-        }
+        },
+        MainSearchStore: {
+            model: 'hdb.model.MainGrid',
+            storeId: 'mainsearch',
+            autoLoad: true,
+            autoSync: false,
+            pageSize: 5,
+            proxy: {
+                type: 'rest',
+                api: {
+                    read: 'http://localhost:8080/api/commandsSearch'
+                },
+                reader: {
+                    type: 'json',
+                    rootProperty: 'data'
+                },
+                actionMethods: {
+                read: 'GET',
+                }
+            },
+            remoteFilter: true,
+            filterParam: 'query'
+        },
     }
 });

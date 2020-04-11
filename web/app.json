@@ -524,7 +524,7 @@
      *
      */
     
-    "locale": "pt_BR", 
+    "locale": "en",
     
     "builds": {
         "classic": {

@@ -18,7 +18,7 @@ Ext.define('hdb.view.main.MainGridView', {
         }],
       tools: [{
         glyph: 'f143',
-        tooltip: 'CLICK !!! Ajude a melhorar, deixe sua opnião.',
+        tooltip: 'CLICK !!!',
         callback: function(){}
       }]
     },
@@ -83,7 +83,7 @@ Ext.define('hdb.view.main.MainGridView', {
     },
 
     tbar: [{
-        text: 'Novo',
+        text: 'New',
         glyph: 'f055',
         handler: 'onNovoForm'
     },'->',{
@@ -95,7 +95,7 @@ Ext.define('hdb.view.main.MainGridView', {
           xtype: 'textfield',
           iconCls: 'search',
           name: 'pesquisa',
-          emptyText: 'Pesquisa',
+          emptyText: 'Search',
           enableKeyEvents: true,
           onTriggerClick: function(field, trigger, e){
             Ext.getCmp('pesquisa').setValue('');
@@ -104,7 +104,9 @@ Ext.define('hdb.view.main.MainGridView', {
             change: {
               buffer: 1000,
               fn: function(){
-                var page = 1, valores = ['sistema', 'funcao', 'comando', 'autor'], Avalores = new Object();
+                var page = 1,
+                  valores = ['title', 'definition', 'command', 'author'],
+                  Avalores = new Object();
                 function seletor(value){
                   return Ext.ComponentQuery.query('maingridview [itemId='+value+']')[0];
                 };
@@ -116,12 +118,16 @@ Ext.define('hdb.view.main.MainGridView', {
                 });
                 Avalores['search'] = Ext.getCmp('pesquisa').getValue();
                 Avalores['sort'] = false;
-                var store = Ext.ComponentQuery.query('maingridview')[0].getStore();
+                var store = Ext.getStore('mainsearch');
                 store.clearFilter();
                 if(Ext.getCmp('pesquisa').getValue() === ''){
+                  Ext.getCmp('pagBar').setBind({
+                    store: '{MainListStore}'
+                  });
                   store.proxy.extraParams = null;
                   store.loadPage(page, Avalores);
                 }else{
+                   Ext.getCmp('pagBar').bindStore(store);
                   store.proxy.extraParams = Avalores;
                   store.loadPage(page, Avalores);
                 }
@@ -132,14 +138,14 @@ Ext.define('hdb.view.main.MainGridView', {
       },{
         glyph:'f14a',
         menu: [
-          { xtype: 'menucheckitem', text: 'Selecione',
+          { xtype: 'menucheckitem', text: 'Check all',
             handler: function(item, e){
               if(item.checked){
-                item.setText('Desselecionar');
+                item.setText('Uncheck all');
               }else{
-                item.setText('Selecionar');
+                item.setText('Check all');
               }
-              var valores = ['sistema','funcao','comando','autor'];
+              var valores = ['title','definition','command','author'];
               function seletor(value){
                 return Ext.ComponentQuery.query('maingridview [itemId='+value+']')[0];
               };
@@ -152,21 +158,20 @@ Ext.define('hdb.view.main.MainGridView', {
               });
             }
           },'-',
-          { itemId: 'sistema', xtype: 'menucheckitem', text: 'sistema'},
-          { itemId: 'funcao', xtype: 'menucheckitem', text: 'funcao'},
-          { itemId: 'comando', xtype: 'menucheckitem', text: 'comando', checked: true},
-          { itemId: 'autor', xtype: 'menucheckitem', text: 'autor'}
+          { itemId: 'title', xtype: 'menucheckitem', text: 'title'},
+          { itemId: 'definition', xtype: 'menucheckitem', text: 'definition'},
+          { itemId: 'command', xtype: 'menucheckitem', text: 'command', checked: true},
+          { itemId: 'author', xtype: 'menucheckitem', text: 'author'}
         ]
       }],
 
     bbar: [{
+        id: "pagBar",
         xtype: 'pagingtoolbar',
         bind:{
             store: '{MainListStore}'
         },
-        displayInfo: true,
-        displayMsg: 'Registros {0} - {1} de {2}',
-        emptyMsg: "Nenhum registro encontrado."
+        displayInfo: true
     }]
 
 });
