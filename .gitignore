@@ -18,4 +18,4 @@ vendor/
 server/node_modules
 .vscode/
 web/sencha-error*
-package-lock.json
+server/package-lock.json

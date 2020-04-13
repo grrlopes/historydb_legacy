@@ -54,7 +54,7 @@ Ext.define('hdb.view.main.MainViewModel', {
         MainSearchStore: {
             model: 'hdb.model.MainGrid',
             storeId: 'mainsearch',
-            autoLoad: true,
+            autoLoad: false,
             autoSync: false,
             pageSize: 5,
             proxy: {

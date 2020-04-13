@@ -24,6 +24,7 @@
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
     "jsonwebtoken": "^8.5.1",
+    "loadash": "^1.0.0",
     "mongoose": "^5.9.3",
     "pm2": "^4.2.3",
     "validator": "^13.0.0"

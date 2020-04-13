@@ -75,34 +75,96 @@ exports.getCommand = (req, res, next) => {
 };
 
 exports.getCommandsSearch = (req, res, next) => {
+	const limit = req.query.limit;
+	const start = req.query.start;
+	const search = req.query.search;
 	let total;
+	let objSearch = [
+		{ author: '' },
+		{ definition: '' },
+		{ title: '' },
+		{ command: '' }
+	];
+
+	const checkBox = ['author', 'definition', 'title', 'command']
+
+	checkBox.map((index, k) => {
+		switch (index) {
+			case 'author':
+				objSearch[k].author = { "$regex": search, "$options": "im" }
+				break;
+			case 'definition':
+				objSearch[k].definition = { "$regex": search, "$options": "im" }
+				break;
+			case 'title':
+				objSearch[k].title = { "$regex": search, "$options": "im" }
+				break;
+			case 'command':
+				objSearch[k].command = { "$regex": search, "$options": "im" }
+				break;
+		}
+	});
+
 	Commands.aggregate([
+		{ $unwind: "$commands" },
 		{
 			$match: {
-				$and: [{
-					"commands.main": {
-						$in: [true]
-					}
-				}]
+				"commands.main": {
+					$in: [true]
+				}
 			}
 		},
-		{ $limit: 3 },
+		{
+			$project: {
+				author: 1,
+				title: 1,
+				definition: 1,
+				cmd_author: "$commands.author",
+				command: "$commands.command",
+				cmd_created_at: "$commands.createdAt",
+				createdAt: 1,
+				updatedAt: 1
+			}
+		},
+		{
+			$match: {
+				$or: objSearch
+			}
+		},
+		{ $limit: parseInt(limit) },
 		{ $count: "total" },
 	]).then(count => {
-		total = count;
+		total = count[0].total;
 		return Commands.aggregate([
 			{ $unwind: "$commands" },
 			{
 				$match: {
-					$and: [{
-						"commands.main": {
-							$in: [true]
-						}
-					}]
+					"commands.main": {
+						$in: [true]
+					}
 				}
 			},
-			{ $limit: 3 }])
+			{
+				$project: {
+					author: 1,
+					title: 1,
+					definition: 1,
+					cmd_author: "$commands.author",
+					command: "$commands.command",
+					cmd_created_at: "$commands.createdAt",
+					createdAt: 1,
+					updatedAt: 1
+				}
+			},
+			{
+				$match: {
+					$or: objSearch
+				}
+			},
+			{ $skip: parseInt(start) },
+			{ $limit: parseInt(limit) }
+		])
 	}).then(result => {
-		res.json({ total: total[0].total, data: result });
+		res.json({ total: total, data: result });
 	})
 }
