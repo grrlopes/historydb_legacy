@@ -1,5 +1,5 @@
 const Commands = require('../models/commands');
-const _ = require('lodash');
+const checkSearch = require('../middleware/check_search')
 
 exports.getCommands = (req, res, next) => {
 	const limit = req.query.limit;
@@ -77,34 +77,9 @@ exports.getCommand = (req, res, next) => {
 exports.getCommandsSearch = async (req, res, next) => {
 	const limit = req.query.limit;
 	const start = req.query.start;
-	const search = req.query.search;
-	const objSearch = []
-	const checkBox = [];
 
 	try{
-	await _.forEach(req.query, (value, key) => {
-		checkBox.push(key)
-	});
-
-	checkBox.map((index) => {
-		switch (index) {
-			case 'author':
-				objSearch.push({author: { "$regex": search, "$options": "im" }});
-				break;
-			case 'definition':
-				objSearch.push({definition: { "$regex": search, "$options": "im" }})
-				break;
-			case 'title':
-				objSearch.push({title: { "$regex": search, "$options": "im" }})
-				break;
-			case 'command':
-				objSearch.push({command: { "$regex": search, "$options": "im" }})
-				break;
-			default:
-				break;
-		}
-	});
-
+	const objSearch = checkSearch.queryCheckbox(req.query);
 	const count = await Commands.aggregate([
 		{ $unwind: "$commands" },
 		{
