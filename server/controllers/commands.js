@@ -1,7 +1,7 @@
 const Commands = require('../models/commands');
+const _ = require('lodash');
 
 exports.getCommands = (req, res, next) => {
-	const currentPage = req.query.page;
 	const limit = req.query.limit;
 	const start = req.query.start;
 	let total;
@@ -74,38 +74,38 @@ exports.getCommand = (req, res, next) => {
 		});
 };
 
-exports.getCommandsSearch = (req, res, next) => {
+exports.getCommandsSearch = async (req, res, next) => {
 	const limit = req.query.limit;
 	const start = req.query.start;
 	const search = req.query.search;
-	let total;
-	let objSearch = [
-		{ author: '' },
-		{ definition: '' },
-		{ title: '' },
-		{ command: '' }
-	];
+	const objSearch = []
+	const checkBox = [];
 
-	const checkBox = ['author', 'definition', 'title', 'command']
+	try{
+	await _.forEach(req.query, (value, key) => {
+		checkBox.push(key)
+	});
 
-	checkBox.map((index, k) => {
+	checkBox.map((index) => {
 		switch (index) {
 			case 'author':
-				objSearch[k].author = { "$regex": search, "$options": "im" }
+				objSearch.push({author: { "$regex": search, "$options": "im" }});
 				break;
 			case 'definition':
-				objSearch[k].definition = { "$regex": search, "$options": "im" }
+				objSearch.push({definition: { "$regex": search, "$options": "im" }})
 				break;
 			case 'title':
-				objSearch[k].title = { "$regex": search, "$options": "im" }
+				objSearch.push({title: { "$regex": search, "$options": "im" }})
 				break;
 			case 'command':
-				objSearch[k].command = { "$regex": search, "$options": "im" }
+				objSearch.push({command: { "$regex": search, "$options": "im" }})
+				break;
+			default:
 				break;
 		}
 	});
 
-	Commands.aggregate([
+	const count = await Commands.aggregate([
 		{ $unwind: "$commands" },
 		{
 			$match: {
@@ -133,9 +133,15 @@ exports.getCommandsSearch = (req, res, next) => {
 		},
 		{ $limit: parseInt(limit) },
 		{ $count: "total" },
-	]).then(count => {
-		total = count[0].total;
-		return Commands.aggregate([
+	]);
+
+	if(count[0] === undefined){
+		const error = new Error('There are not records.');
+		error.statusCode = 404;
+		throw error;
+	}
+
+	const result = await Commands.aggregate([
 			{ $unwind: "$commands" },
 			{
 				$match: {
@@ -163,8 +169,12 @@ exports.getCommandsSearch = (req, res, next) => {
 			},
 			{ $skip: parseInt(start) },
 			{ $limit: parseInt(limit) }
-		])
-	}).then(result => {
-		res.json({ total: total, data: result });
-	})
+	]);
+	res.json({ total: count[0].total, data: result });
+	}catch(error){
+		if (!error.statusCode) {
+			error.statusCode = 500;
+		}
+		res.json({ message: error.message, code: error.statusCode })
+	};
 }
