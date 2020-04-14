@@ -4,6 +4,7 @@ Ext.define('hdb.view.main.MainViewModel', {
     stores: {
         MainListStore: {
             model: 'hdb.model.MainGrid',
+            storeId: 'mainlists',
             autoLoad: true,
             autoSync: false,
             pageSize: 5,

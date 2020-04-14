@@ -106,7 +106,6 @@ exports.getCommandsSearch = async (req, res, next) => {
 				$or: objSearch
 			}
 		},
-		{ $limit: parseInt(limit) },
 		{ $count: "total" },
 	]);
 

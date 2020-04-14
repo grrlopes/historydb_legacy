@@ -119,15 +119,17 @@ Ext.define('hdb.view.main.MainGridView', {
                 Avalores['search'] = Ext.getCmp('pesquisa').getValue();
                 Avalores['sort'] = false;
                 var store = Ext.getStore('mainsearch');
+                var mainstore = Ext.getStore('mainlists');
+                var reconfGrid = Ext.ComponentQuery.query('maingridview')[0];
                 store.clearFilter();
                 if(Ext.getCmp('pesquisa').getValue() === ''){
-                  Ext.getCmp('pagBar').setBind({
-                    store: '{MainListStore}'
-                  });
-                  store.proxy.extraParams = null;
-                  store.loadPage(page, Avalores);
+                  reconfGrid.bindStore(mainstore)
+                  Ext.getCmp('pagBar').bindStore(mainstore);
+                  mainstore.proxy.extraParams = Avalores;
+                  mainstore.loadPage(page, Avalores);
                 }else{
-                   Ext.getCmp('pagBar').bindStore(store);
+                  reconfGrid.bindStore(store)
+                  Ext.getCmp('pagBar').bindStore(store);
                   store.proxy.extraParams = Avalores;
                   store.loadPage(page, Avalores);
                 }
