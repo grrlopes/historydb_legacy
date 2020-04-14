@@ -1,5 +1,7 @@
+const Mongoose = require('mongoose');
 const Commands = require('../models/commands');
 const checkSearch = require('../middleware/check_search')
+const objectId = Mongoose.Types.ObjectId;
 
 exports.getCommands = (req, res, next) => {
 	const limit = req.query.limit;
@@ -56,9 +58,27 @@ exports.getCommands = (req, res, next) => {
 };
 
 exports.getCommand = (req, res, next) => {
-	id = req.body.id;
-	Commands.findById({ _id: id })
-		.then(result => {
+	const id = objectId(req.body.id);
+	Commands.aggregate([
+		{ $unwind: "$commands" },
+		{
+			$match: {
+				_id: id
+			}
+		},
+		{
+			$project: {
+				author: 1,
+				title: 1,
+				definition: 1,
+				cmd_author: "$commands.author",
+				command: "$commands.command",
+				cmd_created_at: "$commands.createdAt",
+				createdAt: 1,
+				updatedAt: 1
+			}
+		}
+	]).then(result => {
 			if (result === null || result.length == 0) {
 				const error = new Error('There is no record.');
 				error.statusCode = 404;
