@@ -12,11 +12,11 @@ Ext.define('hdb.store.MainFormGridStore',{
     proxy: {
         type: 'rest',
         api: {
-            read: 'php/maingrid/getFormGrid.php'
+            read: 'http://localhost:8080/api/command'
         },
         reader: {
             type: 'json',
-            rootProperty: 'dados'
+            rootProperty: 'data'
         },
         actionMethods: {
             read: 'GET'

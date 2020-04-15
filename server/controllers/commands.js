@@ -58,7 +58,7 @@ exports.getCommands = (req, res, next) => {
 };
 
 exports.getCommand = (req, res, next) => {
-	const id = objectId(req.body.id);
+	const id = objectId(req.query._id);
 	Commands.aggregate([
 		{ $unwind: "$commands" },
 		{

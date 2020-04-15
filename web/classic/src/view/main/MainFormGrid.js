@@ -20,18 +20,18 @@ Ext.define('hdb.view.main.MainFormGrid', {
 
     store: 'mainFormgridstoreId',
     columns: [{
-        header: 'Comando',
-        dataIndex: 'comando',
+        header: 'Command',
+        dataIndex: 'command',
         align: 'left',
         flex: 1
     },{
-        header: 'Autor',
-        dataIndex: 'autor',
+        header: 'Author',
+        dataIndex: 'author',
         width: 150,
         align: 'center'
     },{
-        header: 'Data',
-        dataIndex: 'data',
+        header: 'Created',
+        dataIndex: 'createdAt',
         align: 'center',
         width: 135,
         xtype: 'datecolumn',

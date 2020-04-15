@@ -69,8 +69,8 @@ Ext.define('hdb.view.main.MainController', {
         Ext.MessageBox.show({
             icon: Ext.Msg.WARNING,
             closable: false,
-            title: 'Alterar',
-            msg: 'Tem certeza que deseja alterar ?',
+            title: 'Edition',
+            msg: 'Are you sure You want to save changes ?',
             buttons: Ext.MessageBox.YESNO,
             fn: function(btn, env){
                 if(btn == 'yes'){
@@ -89,7 +89,7 @@ Ext.define('hdb.view.main.MainController', {
         var form = win.down('form');
         form.loadRecord(record);
         store.load({
-            params:{_id: record.get('_id'), dados: 'formGrid'}
+            params:{_id: record.get('_id')}
         });
     }
 })

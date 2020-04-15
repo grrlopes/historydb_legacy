@@ -40,7 +40,7 @@ Ext.define('hdb.view.main.MainFormWin', {
             layout: 'fit'
         },
         items: [{
-            title: 'Comando',
+            title: 'Command',
             items: [{
                 width: 675,
                 height: 390,
@@ -53,38 +53,38 @@ Ext.define('hdb.view.main.MainFormWin', {
                     name: '_id'
                 },{
                     xtype: 'hidden',
-                    name: 'autor',
-                    fieldLabel: 'Autor',
+                    name: 'author',
+                    fieldLabel: 'Author',
                     allowBlank: false,
                     readOnly: true
                 },{
                     xtype: 'textfield',
-                    name: 'sistema',
-                    fieldLabel: 'Sistema',
+                    name: 'title',
+                    fieldLabel: 'Title',
                     readOnly: true
                 },{
                     xtype: 'textfield',
-                    name: 'funcao',
-                    fieldLabel: 'Função',
+                    name: 'definition',
+                    fieldLabel: 'Definition',
                     width: 500,
                     allowBlank: false
                 },{
                     xtype: 'htmleditor',
-                    name: 'comando',
-                    fieldLabel: 'Comando',
+                    name: 'command',
+                    fieldLabel: 'Command',
                     autoHeight: true,
                     height: 370,
                     resizable: true,
                     allowBlank: false
                 }],
                 buttons: [{
-                    text: 'Salvar',
+                    text: 'Save',
                     formBind: true,
                     handler: 'onEditForm'
                 }]
             }]
         },{
-            title: 'Histórico',
+            title: 'Track Down',
             items: [{
                 defaults: {
                     labelAlign: 'top'
