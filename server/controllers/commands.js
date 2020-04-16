@@ -171,4 +171,43 @@ exports.getCommandsSearch = async (req, res, next) => {
 		}
 		res.json({ message: error.message, code: error.statusCode })
 	};
+};
+
+exports.addCommand = async (req, res, next) => {
+	const id = req.params.id
+	const commands = req.body.commands.command;
+	const commAuthor = req.body.commands.author;
+	try {
+		const increment = await Commands.findOneAndUpdate(
+			{
+				_id: id,
+				commands: { $elemMatch: { main: { $eq: true } } },
+			},
+			{
+				$set: { 'commands.$.main': false }
+			},
+			{ new: true }
+		);
+
+		if (!increment) {
+			const error = new Error('Could not find record.');
+			error.statusCode = 404;
+			throw error;
+		};
+
+		increment.commands.unshift({
+			author: commAuthor,
+			command: commands,
+			main: true
+		});
+
+		result = await increment.save();
+		res.status(200).json({ message: 'Command added!', command: result });
+
+	} catch (err) {
+		if (!err.statusCode) {
+			err.statusCode = 500;
+		}
+		next(err);
+	}
 }

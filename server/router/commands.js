@@ -10,4 +10,6 @@ router.get('/command', CommandController.getCommand);
 
 router.get('/commandsSearch', CommandController.getCommandsSearch);
 
+router.put('/addcommand/:id', CommandController.addCommand);
+
 module.exports = router;

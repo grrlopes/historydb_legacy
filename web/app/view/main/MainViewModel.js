@@ -12,7 +12,7 @@ Ext.define('hdb.view.main.MainViewModel', {
                 type: 'rest',
                 api: {
                     read: 'http://localhost:8080/api/commands',
-                    update: 'php/maingrid/setForm.php',
+                    update: 'http://localhost:8080/api/command',
                     create: 'php/maingrid/setNovoCad.php'
                 },
                 reader: {

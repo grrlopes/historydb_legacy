@@ -65,7 +65,7 @@ Ext.define('hdb.view.main.MainController', {
             form = win.down('form'),
             store = Ext.ComponentQuery.query('maingridview')[0].getStore(),
             record = form.getRecord(),
-            valor = form.getValues();
+            value = form.getValues();
         Ext.MessageBox.show({
             icon: Ext.Msg.WARNING,
             closable: false,
@@ -74,7 +74,7 @@ Ext.define('hdb.view.main.MainController', {
             buttons: Ext.MessageBox.YESNO,
             fn: function(btn, env){
                 if(btn == 'yes'){
-                    record.set(valor);
+                    record.set(value);
                     store.sync();
                     win.close();
                 }
