@@ -4,6 +4,7 @@ Ext.define('hdb.model.MainGrid', {
         namespace: 'hdb.model'
     },
     fields: [
+        { name: 'id', type: 'string', persist: false },
         { name: '_id', type: 'string' },
         { name: 'author', type: 'string' },
         { name: 'title', type: 'string' },

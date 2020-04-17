@@ -12,7 +12,7 @@ Ext.define('hdb.view.main.MainViewModel', {
                 type: 'rest',
                 api: {
                     read: 'http://localhost:8080/api/commands',
-                    update: 'http://localhost:8080/api/command',
+                    update: 'http://localhost:8080/api/addcommand?',
                     create: 'php/maingrid/setNovoCad.php'
                 },
                 reader: {
@@ -21,12 +21,10 @@ Ext.define('hdb.view.main.MainViewModel', {
                 },
                 writer: {
                     type: 'json',
-                    writeAllFields: true,
-                    rootProperty: 'dados',
-                    encode: true
+                    writeAllFields: true
                 },
                 actionMethods: {
-                read: 'GET', update: 'POST'
+                read: 'GET', update: 'PUT', write: 'POST'
                 }
             },
             remoteFilter: true,

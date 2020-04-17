@@ -74,7 +74,7 @@ Ext.define('hdb.view.main.MainController', {
             buttons: Ext.MessageBox.YESNO,
             fn: function(btn, env){
                 if(btn == 'yes'){
-                    record.set(value);
+                    record.set({'_id': value._id, 'command': value.command});
                     store.sync();
                     win.close();
                 }

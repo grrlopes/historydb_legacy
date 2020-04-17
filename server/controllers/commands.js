@@ -174,9 +174,10 @@ exports.getCommandsSearch = async (req, res, next) => {
 };
 
 exports.addCommand = async (req, res, next) => {
-	const id = req.params.id
-	const commands = req.body.commands.command;
-	const commAuthor = req.body.commands.author;
+	console.log(req.body)
+	const id = objectId(req.body._id);
+	const command = req.body.command;
+	const commAuthor = req.body.cmd_author;
 	try {
 		const increment = await Commands.findOneAndUpdate(
 			{
@@ -197,7 +198,7 @@ exports.addCommand = async (req, res, next) => {
 
 		increment.commands.unshift({
 			author: commAuthor,
-			command: commands,
+			command: command,
 			main: true
 		});
 
