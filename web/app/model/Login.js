@@ -5,9 +5,9 @@ Ext.define('hdb.model.Login', {
     },
     fields: [
         { name: '_id', type: 'string' },
-        { name: 'usuario', type: 'string' },
-        { name: 'level', type: 'string' },
-        { name: 'logado', type: 'string' },
+        { name: 'email', type: 'string' },
+        { name: 'password', type: 'string' },
+        { name: 'status', type: 'string' },
         { name: 'lastlogin', type: 'date' }
     ]
 });

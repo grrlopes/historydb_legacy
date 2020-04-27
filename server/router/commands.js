@@ -1,6 +1,7 @@
 const express = require('express');
 
 const CommandController = require('../controllers/commands');
+const check_auth = require('../middleware/token_auth');
 
 const router = express.Router();
 

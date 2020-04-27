@@ -44,7 +44,7 @@ exports.login = (req, res, next) => {
   User.findOne({ email: email })
     .then(user => {
       if (!user) {
-        const error = new error('Login and Password do not match!');
+        const error = new Error('Login do not match!');
         error.statusCode = 401;
         throw error;
       }
@@ -53,7 +53,7 @@ exports.login = (req, res, next) => {
     })
     .then(isEqual => {
       if (!isEqual) {
-        const error = new Error('Wrong Login or password');
+        const error = new Error('Wrong password');
         error.statusCode = 401;
         throw error;
       }
@@ -65,7 +65,10 @@ exports.login = (req, res, next) => {
         process.env.JWT_KEY,
         { expiresIn: '20m' }
       );
-      res.status(200).json({ token: token, userId: loadedUser._id.toString() });
+      res.status(200).json({
+        token: token,
+        userId: loadedUser._id.toString(),
+        message: 'success' });
     })
     .catch(err => {
       if (!err.statusCode) {

@@ -12,7 +12,7 @@ Ext.application({
     // will gain a "viewport" plugin if it does not extend Ext.Viewport. With the
     // modern toolkit, the main view will be added to the Viewport.
     //
-    loginview: 'hdb.view.login.Loginn'
+    loginview: 'hdb.view.login.Login'
 	
     //-------------------------------------------------------------------------
     // Most customizations should be made to hdb.Application. If you need to

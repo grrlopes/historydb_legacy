@@ -174,7 +174,6 @@ exports.getCommandsSearch = async (req, res, next) => {
 };
 
 exports.addCommand = async (req, res, next) => {
-	console.log(req.body)
 	const id = objectId(req.body._id);
 	const command = req.body.command;
 	const commAuthor = req.body.cmd_author;

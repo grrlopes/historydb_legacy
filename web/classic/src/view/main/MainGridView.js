@@ -7,9 +7,10 @@ Ext.define('hdb.view.main.MainGridView', {
         titlePosition: 0,
         items:[{
             xtype:'button',
-            text: localStorage.getItem("historydb"),
+            text: localStorage.getItem("user"),
             glyph: 'f007@FontAwesome',
-            disabled: true
+            disabled: true,
+            margin: 'auto, 5px, auto, auto'
         },{
             xtype: 'button',
             text: 'Exit',
