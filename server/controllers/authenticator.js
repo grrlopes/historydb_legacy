@@ -65,6 +65,11 @@ exports.login = (req, res, next) => {
         process.env.JWT_KEY,
         { expiresIn: '20m' }
       );
+      loadedUser.tokens = loadedUser.tokens.push({ token })
+      User.findOne({ email: email }).then(user => {
+        user.tokens = loadedUser.tokens
+        user.save()
+      });
       res.status(200).json({
         token: token,
         userId: loadedUser._id.toString(),
@@ -76,4 +81,16 @@ exports.login = (req, res, next) => {
       }
       next(err);
     })
+};
+
+exports.logout = async (req, res, next) => {
+  try {
+    req.user.tokens = req.user.tokens.filter((token) => {
+      return token.token !== req.token
+    })
+    await req.user.save()
+    res.status(200).json({ message: 'Success Logout!!'});
+  } catch(e) {
+    res.status(500).send()
+  }
 }

@@ -9,15 +9,12 @@ Ext.define('hdb.view.main.MainController', {
     onLogOff: function(button, e, eOpts){
         var me = this;
         sessionStorage.removeItem("historydb");
-        localStorage.removeItem("historydb");
         Ext.getBody().mask("Efetuando Logout ...");
         Ext.Ajax.request({
           url: 'php/login/getLogout.php',
-          method: 'GET',
+          method: 'POST',
           success: function(response){
-            var resultado = Ext.JSON.decode(
-              response.responseText, true
-            );
+            var resultado = Ext.JSON.decode(response.responseText, true);
             if(resultado.success){
                 me.getView().destroy();
                 Ext.widget(

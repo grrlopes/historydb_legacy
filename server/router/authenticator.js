@@ -4,6 +4,8 @@ const { body } = require('express-validator');
 const login = require('../models/authenticator');
 const authController = require('../controllers/authenticator');
 
+const check_auth = require('../middleware/token_auth');
+
 const router = express.Router();
 
 router.put('/signup', [
@@ -22,6 +24,8 @@ router.put('/signup', [
 	body('name').trim().not().isEmpty()
 ], authController.signup);
 
-router.post('/login', authController.login)
+router.post('/login', authController.login);
+
+router.post('/logout', check_auth, authController.logout);
 
 module.exports = router;

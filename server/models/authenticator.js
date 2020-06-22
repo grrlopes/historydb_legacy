@@ -12,7 +12,10 @@ const authSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: 'Post'
       }
-    ]
+    ],
+    tokens: [{
+      token: { type: String, required: true }
+    }]
   },
   { timestamps: true }
 );

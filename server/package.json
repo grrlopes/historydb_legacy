@@ -13,7 +13,8 @@
     "history",
     "historydb",
     "npm",
-    "command"
+    "command",
+    "inventory"
   ],
   "author": "Gabriel Lopes",
   "license": "MIT",
