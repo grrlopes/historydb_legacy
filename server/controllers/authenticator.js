@@ -63,7 +63,7 @@ exports.login = (req, res, next) => {
           userId: loadedUser._id.toString()
         },
         process.env.JWT_KEY,
-        { expiresIn: '20m' }
+        { expiresIn: '29d' }
       );
       loadedUser.tokens = loadedUser.tokens.push({ token })
       User.findOne({ email: email }).then(user => {

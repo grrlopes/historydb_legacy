@@ -7,10 +7,10 @@ const router = express.Router();
 
 router.get('/commands', check_auth, CommandController.getCommands);
 
-router.get('/command', CommandController.getCommand);
+router.get('/command', check_auth, CommandController.getCommand);
 
-router.get('/commandsSearch', CommandController.getCommandsSearch);
+router.get('/commandsSearch', check_auth, CommandController.getCommandsSearch);
 
-router.put('/addcommand', CommandController.addCommand);
+router.put('/addcommand', check_auth, CommandController.addCommand);
 
 module.exports = router;

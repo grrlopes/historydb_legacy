@@ -22,9 +22,7 @@ Ext.define('hdb.view.login.LoginController', {
             success: function(conn, response, options, eOpts){
                 var result = Ext.JSON.decode(conn.responseText, true);
                 if(result.token){
-                    localStorage.setItem("user", userPass.user);
-                    localStorage.setItem("userid", result.userId);
-                    sessionStorage.setItem("historydb", result.message);
+                    me.saveToken(result, userPass);
                     me.getView().destroy();
                     Ext.widget(
                         'mainview'
@@ -39,6 +37,7 @@ Ext.define('hdb.view.login.LoginController', {
                     closable: false,
                     buttons: Ext.Msg.OK
                 });
+                me.clearToken();
             }
         });
     },
@@ -97,5 +96,19 @@ Ext.define('hdb.view.login.LoginController', {
                 });
             }
         })
+    },
+
+    saveToken: function(result, userPass){
+        localStorage.setItem("user", userPass.user);
+        localStorage.setItem("userid", result.userId);
+        localStorage.setItem("token", result.token);
+        sessionStorage.setItem("historydb", result.message);
+    },
+
+    clearToken: function(){
+        localStorage.setItem("user", userPass.user);
+        localStorage.setItem("userid", result.userId);
+        localStorage.setItem("token", result.token);
+        sessionStorage.setItem("historydb", result.message);
     }
 });

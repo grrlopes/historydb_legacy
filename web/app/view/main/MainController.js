@@ -2,20 +2,27 @@ Ext.define('hdb.view.main.MainController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.mainviewctrl',
 
+    init: function () {
+        this.getToken();
+    },
+
     onNovoForm: function(){
         var win = Ext.create('hdb.view.main.MainNovoForm');
     },
 
     onLogOff: function(button, e, eOpts){
         var me = this;
-        sessionStorage.removeItem("historydb");
-        Ext.getBody().mask("Efetuando Logout ...");
+        Ext.getBody().mask("Logging off...");
         Ext.Ajax.request({
-          url: 'php/login/getLogout.php',
+          url: 'http://localhost:8080/auth/logout',
           method: 'POST',
+          headers: {
+            'Authorization': 'Bearer '+this.getViewModel().get('token')
+          },
           success: function(response){
-            var resultado = Ext.JSON.decode(response.responseText, true);
-            if(resultado.success){
+            var msg = Ext.JSON.decode(response.responseText, true);
+            if(response.status == 200){
+                me.clearToken()
                 me.getView().destroy();
                 Ext.widget(
                     'loginview'
@@ -88,5 +95,17 @@ Ext.define('hdb.view.main.MainController', {
         store.load({
             params:{_id: record.get('_id')}
         });
+    },
+
+    getToken: function(){
+        var token = localStorage.getItem('token');
+        this.getViewModel().set('token', token);
+    },
+
+    clearToken: function(){
+        localStorage.removeItem("user");
+        localStorage.removeItem("userid");
+        localStorage.removeItem("token");
+        sessionStorage.removeItem("historydb");
     }
 })

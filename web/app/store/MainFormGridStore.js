@@ -14,6 +14,9 @@ Ext.define('hdb.store.MainFormGridStore',{
         api: {
             read: 'http://localhost:8080/api/command'
         },
+        headers: {
+            'Authorization': 'Bearer {token}'
+        },
         reader: {
             type: 'json',
             rootProperty: 'data'

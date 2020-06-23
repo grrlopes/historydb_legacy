@@ -15,6 +15,9 @@ Ext.define('hdb.view.main.MainViewModel', {
                     update: 'http://localhost:8080/api/addcommand?',
                     create: 'php/maingrid/setNovoCad.php'
                 },
+                headers: {
+                    'Authorization': 'Bearer {token}'
+                },
                 reader: {
                     type: 'json',
                     rootProperty: 'data'
@@ -59,7 +62,10 @@ Ext.define('hdb.view.main.MainViewModel', {
             proxy: {
                 type: 'rest',
                 api: {
-                    read: 'http://localhost:8080/api/commandsSearch'
+                    read: 'http://localhost:8080/api/commandsSearch/'
+                },
+                headers: {
+                    'Authorization': 'Bearer {token}'
                 },
                 reader: {
                     type: 'json',

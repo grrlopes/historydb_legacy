@@ -23,6 +23,6 @@ module.exports = async (req, res, next) => {
 		req.userId = decodedToken.userId;
 		next();
     } catch (error) {
-		res.json({ message: error.message, code: error.statusCode })
+		  res.json({ message: error.message, code: error.statusCode })
 	}
 };

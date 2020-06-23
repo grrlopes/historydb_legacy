@@ -18,9 +18,9 @@ Ext.define('hdb.Application', {
     
     launch: function (){
         Ext.setGlyphFontFamily('FontAwesome');
-        var loggedIn = sessionStorage.getItem("historydb");
+        var token = localStorage.getItem("token");
         Ext.widget(
-            loggedIn ? 'mainview' : 'loginview'
+            token ? 'mainview' : 'loginview'
         );
     }
 });
