@@ -1,10 +1,10 @@
-Ext.define('hdb.view.main.MainNovoForm', {
+Ext.define('hdb.view.main.MainNewForm', {
     extend: 'Ext.window.Window',
-    alias: 'widget.mainnovoform',
+    alias: 'widget.mainnewform',
 
     controller: 'mainviewctrl',
 
-    title: 'Novo registro',
+    title: 'New register',
     width: 710,
     height: 600,
     maxWidth: 1200,
@@ -34,29 +34,29 @@ Ext.define('hdb.view.main.MainNovoForm', {
         },
         items: [{
             xtype: 'textfield',
-            name: 'sistema',
-            fieldLabel: 'Sistema',
+            name: 'title',
+            fieldLabel: 'Title',
             width: 500,
             allowBlank: false
         },{
             xtype: 'textfield',
-            name: 'funcao',
-            fieldLabel: 'Função',
+            name: 'definition',
+            fieldLabel: 'Definition',
             width: 500,
             allowBlank: false
         },{
             xtype: 'htmleditor',
-            name: 'comando',
-            fieldLabel: 'Comando',
+            name: 'command',
+            fieldLabel: 'Command',
             height: 410,
             autoHeight: true,
             resizable: true,
             allowBlank: false
         }],
         buttons: [{
-            text: 'Cadastrar',
+            text: 'Create',
             formBind: true,
-            handler: 'onCadastraForm'
+            handler: 'onRegisterForm'
         }]
     }]
 })

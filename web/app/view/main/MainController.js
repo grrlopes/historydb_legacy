@@ -7,7 +7,7 @@ Ext.define('hdb.view.main.MainController', {
     },
 
     onNovoForm: function(){
-        var win = Ext.create('hdb.view.main.MainNovoForm');
+        var win = Ext.create('hdb.view.main.MainNewForm');
     },
 
     onLogOff: function(button, e, eOpts){
@@ -33,7 +33,7 @@ Ext.define('hdb.view.main.MainController', {
         });
     },
 
-    onCadastraForm: function(btn, e, eOpts){
+    onRegisterForm: function(btn, e, eOpts){
         var win = btn.up('window'),
             form = win.down('form'),
             store = Ext.ComponentQuery.query('maingridview')[0].getStore(),
@@ -41,8 +41,8 @@ Ext.define('hdb.view.main.MainController', {
         Ext.MessageBox.show({
             icon: Ext.Msg.QUESTION,
             closable: false,
-            title: 'Atenção',
-            msg: 'As informações estão corretas ?',
+            title: 'Attention',
+            msg: 'Is all the information correct ?',
             buttons: Ext.MessageBox.YESNO,
             fn: function(btn, env){
                 if(btn == 'yes'){

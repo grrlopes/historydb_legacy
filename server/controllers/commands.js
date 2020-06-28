@@ -211,3 +211,29 @@ exports.addCommand = async (req, res, next) => {
 		next(err);
 	}
 }
+
+exports.newRegisterCommand = async (req, res, next) => {
+	const author = req.user.name;
+	const title = req.body.title;
+	const definition = req.body.definition;
+	const commAuthor = req.user.name;
+	const commComm = req.body.command;
+	try {
+		const commands = new Commands({
+			author: author,
+			title: title,
+			definition: definition,
+			commands: [{
+				author: commAuthor,
+				command: commComm,
+				main: true,
+			}],
+		});
+
+		result = await commands.save();
+		res.status(200).json({ message: 'Command has added!', data: result });
+
+	}catch(err){
+		res.status(400).json({ message: err.message })
+	}
+}

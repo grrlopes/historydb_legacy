@@ -13,7 +13,7 @@ Ext.define('hdb.view.main.MainViewModel', {
                 api: {
                     read: 'http://localhost:8080/api/commands',
                     update: 'http://localhost:8080/api/addcommand?',
-                    create: 'php/maingrid/setNovoCad.php'
+                    create: 'http://localhost:8080/api/newRegCommand'
                 },
                 headers: {
                     'Authorization': 'Bearer {token}'
@@ -33,23 +33,27 @@ Ext.define('hdb.view.main.MainViewModel', {
             remoteFilter: true,
             filterParam: 'query'
         },
-        MainNovoCadStore: {
+        MainNewCadStore: {
             model: 'hdb.model.MainGrid',
+            storeId: 'mainnewcadstore',
             autoLoad: false,
             autoSync: false,
             proxy: {
                 type: 'rest',
                 api: {
-                    create: 'php/maingrid/setNovoCad.php'
+                    create: 'http://localhost:8080/api/newRegCommand'
+                },
+                headers: {
+                    'Authorization': 'Bearer {token}'
                 },
                 writer: {
                     type: 'json',
                     writeAllFields: true,
-                    rootProperty: 'dados',
-                    encode: true
+                    //rootProperty: 'data',
+                    //encode: true
                 },
                 actionMethods: {
-                    update: 'POST'
+                    create: 'POST'
                 }
             }
         },

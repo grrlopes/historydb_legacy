@@ -13,4 +13,6 @@ router.get('/commandsSearch', check_auth, CommandController.getCommandsSearch);
 
 router.put('/addcommand', check_auth, CommandController.addCommand);
 
+router.post('/newRegCommand', check_auth, CommandController.newRegisterCommand);
+
 module.exports = router;

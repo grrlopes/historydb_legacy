@@ -4,21 +4,21 @@ const Schema = mongoose.Schema;
 const command = new Schema(
 	{
 		_id: false,
-		author: { type: String, required: false },
-		command: { type: String, required: false },
-		main: { type: Boolean, required: false }
+		author: { type: String, required: true },
+		command: { type: String, required: true },
+		main: { type: Boolean, required: true }
 	},
 	{ timestamps: { createdAt: true, updatedAt: false } }
 );
 
 const commandSchema = new Schema(
 	{
-		author: { type: String, required: false },
-		title: { type: String, required: false },
-		definition: { type: String, required: false },
+		author: { type: String, required: true },
+		title: { type: String, required: true },
+		definition: { type: String, required: true },
 		commands: [command],
 	},
-	{ timestamps: true }
+	{ timestamps: { createdAt: true, updatedAt: { type: Date, default: Date.now() } } }
 );
 
 module.exports = mongoose.model('Posts', commandSchema);
