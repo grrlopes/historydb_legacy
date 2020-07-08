@@ -1,14 +1,16 @@
 Ext.define('hdb.view.login.LoginController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.loginviewctrl',
-
+    requires: [
+        'hdb.config.Config',
+    ],
     onLogin: function(btn, event, Opts){
         var win = btn.up('window'),
             form = win.down('form'),
             me = this,
             userPass = form.getForm().getValues();
         Ext.Ajax.request({
-            url: 'http://localhost:8080/auth/login',
+            url: hdb.config.onlogin,
             cors: true,
             useDefaultXhrHeader: false,
             method: "POST",

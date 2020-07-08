@@ -1,6 +1,9 @@
 Ext.define('hdb.view.main.MainViewModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.MainViewModel',
+    requires: [
+        'hdb.config.Config',
+    ],
     stores: {
         MainListStore: {
             model: 'hdb.model.MainGrid',
@@ -11,9 +14,9 @@ Ext.define('hdb.view.main.MainViewModel', {
             proxy: {
                 type: 'rest',
                 api: {
-                    read: 'http://localhost:8080/api/commands',
-                    update: 'http://localhost:8080/api/addcommand?',
-                    create: 'http://localhost:8080/api/newRegCommand'
+                    read: hdb.config.commands,
+                    update: hdb.config.addcommand,
+                    create: hdb.config.newRegCommand
                 },
                 headers: {
                     'Authorization': 'Bearer {token}'
@@ -41,7 +44,7 @@ Ext.define('hdb.view.main.MainViewModel', {
             proxy: {
                 type: 'rest',
                 api: {
-                    create: 'http://localhost:8080/api/newRegCommand'
+                    create: hdb.config.newRegCommand
                 },
                 headers: {
                     'Authorization': 'Bearer {token}'
@@ -66,7 +69,7 @@ Ext.define('hdb.view.main.MainViewModel', {
             proxy: {
                 type: 'rest',
                 api: {
-                    read: 'http://localhost:8080/api/commandsSearch/'
+                    read: hdb.config.commandsSearch
                 },
                 headers: {
                     'Authorization': 'Bearer {token}'

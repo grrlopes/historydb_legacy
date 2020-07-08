@@ -1,7 +1,9 @@
 Ext.define('hdb.view.main.MainController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.mainviewctrl',
-
+    requires: [
+        'hdb.config.Config',
+    ],
     init: function () {
         this.getToken();
     },
@@ -14,7 +16,7 @@ Ext.define('hdb.view.main.MainController', {
         var me = this;
         Ext.getBody().mask("Logging off...");
         Ext.Ajax.request({
-          url: 'http://localhost:8080/auth/logout',
+          url: hdb.config.onlogoff,
           method: 'POST',
           headers: {
             'Authorization': 'Bearer '+this.getViewModel().get('token')
@@ -58,9 +60,10 @@ Ext.define('hdb.view.main.MainController', {
         var win = btn.up('window'),
             form = win.down('form'),
             record = form.getRecord();
+            console.log(record)
         var store = Ext.data.StoreManager.lookup('mainFormgridstoreId');
         store.load({
-            params:{_id: record.get('_id'), dados: 'formGrid'}
+            params:{_id: record.get('_id')}
         });
     },
 

@@ -9,13 +9,16 @@ Ext.define('hdb.store.MainFormGridStore',{
         property: 'data',
         direction: 'desc'
     }],
+    requires: [
+        'hdb.config.Config',
+    ],
     proxy: {
         type: 'rest',
         api: {
-            read: 'http://localhost:8080/api/command'
+            read: hdb.config.command
         },
         headers: {
-            'Authorization': 'Bearer {token}'
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         reader: {
             type: 'json',
