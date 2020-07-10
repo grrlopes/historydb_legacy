@@ -60,7 +60,6 @@ Ext.define('hdb.view.main.MainController', {
         var win = btn.up('window'),
             form = win.down('form'),
             record = form.getRecord();
-            console.log(record)
         var store = Ext.data.StoreManager.lookup('mainFormgridstoreId');
         store.load({
             params:{_id: record.get('_id')}
@@ -92,7 +91,7 @@ Ext.define('hdb.view.main.MainController', {
     onSelect: function (grid, record, index, eOpts){
         var win = Ext.create('hdb.view.main.MainFormWin');
         var store = Ext.data.StoreManager.lookup('mainFormgridstoreId');
-        win.setTitle('Informação do sistema - '+record.get('sistema'));
+        win.setTitle(record.get('title'));
         var form = win.down('form');
         form.loadRecord(record);
         store.load({
