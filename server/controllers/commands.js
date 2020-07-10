@@ -216,7 +216,6 @@ exports.newRegisterCommand = async (req, res, next) => {
 	const author = req.user.name;
 	const title = req.body.title;
 	const definition = req.body.definition;
-	const commAuthor = req.user.name;
 	const commComm = req.body.command;
 	try {
 		const commands = new Commands({
@@ -224,7 +223,7 @@ exports.newRegisterCommand = async (req, res, next) => {
 			title: title,
 			definition: definition,
 			commands: [{
-				author: commAuthor,
+				author: author,
 				command: commComm,
 				main: true,
 			}],

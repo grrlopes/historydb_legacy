@@ -16,7 +16,7 @@ Ext.define('hdb.view.main.MainViewModel', {
                 api: {
                     read: hdb.config.commands,
                     update: hdb.config.addcommand,
-                    create: hdb.config.newRegCommand
+                    create: hdb.config.newregcommand
                 },
                 headers: {
                     'Authorization': 'Bearer {token}'

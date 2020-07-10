@@ -12,7 +12,7 @@ Ext.define("hdb.config.Config", {
     // MainListStore, MainNewCadStore
     commands: 'http://localhost:8080/api/commands',
     addcommand: 'http://localhost:8080/api/addcommand?',
-    newregcommand: 'http://localhost:8080/api/newRegCommand',
+    newregcommand: 'http://localhost:8080/api/newregcommand',
     // MainSearchStore
     commandsSearch: 'http://localhost:8080/api/commandsSearch/',
 
