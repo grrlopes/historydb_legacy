@@ -11,7 +11,7 @@ Ext.define('hdb.view.login.Login', {
 
     bodyPadding: 1,
     resizable: false,
-    title: 'Credencial',
+    title: 'Credential',
     closable: false,
     autoShow: true,
     border: false,
@@ -56,34 +56,43 @@ Ext.define('hdb.view.login.Login', {
                 }]
             }]
         },{
-            title: 'Não tenho cadastro',
+            title: 'Sign Up',
             items: [{
                 width: 345,
-                height: 150,
+                height: 180,
                 xtype: 'form',
                 items: [{
                     xtype: 'textfield',
-                    name: 'user',
-                    fieldLabel: 'Usuário',
+                    name: 'email',
+                    fieldLabel: 'Email',
                     allowBlank: false
                 },{
                     xtype: 'textfield',
-                    name: 'pass',
-                    inputType: 'password',
-                    fieldLabel: 'senha',
+                    name: 'name',
+                    fieldLabel: 'Name',
                     allowBlank: false
                 },{
                     xtype: 'textfield',
-                    name: 'cpass',
+                    name: 'surname',
+                    fieldLabel: 'Surname',
+                    allowBlank: false
+                },{
+                    xtype: 'textfield',
+                    name: 'login',
+                    fieldLabel: 'Login',
+                    allowBlank: false
+                },{
+                    xtype: 'textfield',
+                    name: 'password',
                     inputType: 'password',
-                    fieldLabel: 'Confirme senha',
+                    fieldLabel: 'Password',
                     allowBlank: false
                 }],
                 buttons: [{
-                    text: 'Cadastrar',
+                    text: 'Sign Up',
                     formBind: true,
                     listeners: {
-                        click: 'onNovoLogin'
+                        click: 'onSignup'
                     }
                 }]
             }]

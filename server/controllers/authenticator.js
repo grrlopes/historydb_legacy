@@ -6,27 +6,32 @@ const User = require('../models/authenticator');
 
 exports.signup = (req, res, next) => {
   const erros = validationResult(req);
-  if (!erros.isEmpty()) {
-    const error = new Error('Validation failed');
-    error.statusCode = 422;
-    error._custom = erros.array();
-    throw error;
-  }
+  try {
+    if (!erros.isEmpty()) {
+      const error = new Error('Validation failed');
+      error.statusCode = 422;
+      error._custom = erros.array();
+      throw error;
+    }
   const email = req.body.email;
   const name = req.body.name;
+  const surname = req.body.surname;
+  const login = req.body.login;
   const password = req.body.password;
   bcrypt.hash(password, 12)
     .then(hashedPw => {
       const user = new User({
         email: email,
-        password: hashedPw,
-        name: name
+        name: name,
+        surname: surname,
+        login: login,
+        password: hashedPw
       });
       return user.save();
     })
     .then(result => {
       res.status(201).json({
-        message: 'User created', userId: result._id
+        message: 'You have signed up successfully', userId: result._id
       })
     })
     .catch(err => {
@@ -35,6 +40,11 @@ exports.signup = (req, res, next) => {
       }
       next(err);
     })
+  }catch(error){
+    res.status(422).json({
+      message: error
+    })
+  }
 };
 
 exports.login = (req, res, next) => {

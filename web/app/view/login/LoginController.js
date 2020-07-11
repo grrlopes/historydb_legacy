@@ -44,54 +44,42 @@ Ext.define('hdb.view.login.LoginController', {
         });
     },
 
-    onNovoLogin: function(btn, event, Opts){
+    onSignup: function(btn, event, Opts){
         var form = btn.up('form'),
-            valores = form.getForm().getValues();
-        if(valores.pass !== valores.cpass){
-            Ext.Msg.show({
-                msg: 'Senha não confere!!!',
-                icon: Ext.Msg.WARNING,
-                closable: false,
-                buttons: Ext.Msg.OK
-            });
-            return false;
-        }
+            values = form.getForm().getValues();
         Ext.Ajax.request({
-            url: 'php/login/setLogin.php',
-            params: {
-                usuario: valores.user,
-                senha: valores.pass,
-                csenha: valores.cpass
+            url: hdb.config.signup,
+            cors: true,
+            method: "POST",
+            useDefaultXhrHeader: false,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            jsonData: {
+                'email': values.email,
+                'name': values.name,
+                'surname': values.surname,
+                'login': values.login,
+                'password': values.password
             },
             success: function(conn, response, options, eOpts){
                 var result = Ext.JSON.decode(conn.responseText, true);
-                switch(result.msg){
-                    case 'existe':
-                        Ext.Msg.show({
-                            msg: 'Esse login já existe!',
-                            icon: Ext.Msg.WARNING,
-                            closable: false,
-                            buttons: Ext.Msg.OK
-                        });
-                        break;
-                    case 'noexiste':
-                        Ext.Msg.show({
-                            msg: 'Login cadastrado!',
-                            icon: Ext.Msg.INFO,
-                            closable: false,
-                            buttons: Ext.Msg.OK,
-                            fn: function(btn, ev){
-                                if(btn === 'ok'){
-                                    form.getForm().reset();
-                                }
-                            }
-                        });
-                }
+                Ext.Msg.show({
+                    msg: result.message,
+                    icon: Ext.Msg.INFO,
+                    closable: false,
+                    buttons: Ext.Msg.OK,
+                    fn: function(btn, ev){
+                        if(btn === 'ok'){
+                            form.getForm().reset();
+                        }
+                    }
+                });
             },
             failure: function(conn, response, options, eOpts){
                 var result = Ext.JSON.decode(conn.responseText, true);
                 Ext.Msg.show({
-                    msg: result,
+                    msg: result.message._custom[0]['msg'],
                     icon: Ext.Msg.INFO,
                     closable: false,
                     buttons: Ext.Msg.OK

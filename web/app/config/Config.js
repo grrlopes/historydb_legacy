@@ -20,7 +20,11 @@ Ext.define("hdb.config.Config", {
       app/view/login
       LoginController
     */
+    // Login
     onlogin: 'http://localhost:8080/auth/login',
+    // signup
+    signup: 'http://localhost:8080/auth/signup',
+
 
     /*
       Main folder
