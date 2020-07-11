@@ -3,25 +3,31 @@ Ext.define('hdb.view.main.MainGridView', {
     alias: 'widget.maingridview',
     title: 'HistoryDB',
 
-    header:{
-        titlePosition: 0,
-        items:[{
-            xtype:'button',
-            text: localStorage.getItem("user"),
-            glyph: 'f007@FontAwesome',
-            disabled: true,
-            margin: 'auto, 5px, auto, auto'
-        },{
-            xtype: 'button',
-            text: 'Exit',
-            glyph: 'f08b',
-            handler: 'onLogOff'
-        }],
-      tools: [{
-        glyph: 'f143',
-        tooltip: 'CLICK !!!',
-        callback: function(){}
-      }]
+    initComponent: function(){
+      var me = this;
+      Ext.applyIf(me, {
+        header:{
+            titlePosition: 0,
+            items:[{
+                xtype:'button',
+                text: this.getToken(),
+                glyph: 'f007@FontAwesome',
+                disabled: true,
+                margin: 'auto, 5px, auto, auto'
+            },{
+                xtype: 'button',
+                text: 'Exit',
+                glyph: 'f08b',
+                handler: 'onLogOff'
+            }],
+          tools: [{
+            glyph: 'f143',
+            tooltip: 'CLICK !!!',
+            callback: function(){}
+          }]
+        }
+      });
+      me.callParent(arguments);
     },
 
     bind: {
@@ -175,6 +181,10 @@ Ext.define('hdb.view.main.MainGridView', {
             store: '{MainListStore}'
         },
         displayInfo: true
-    }]
+    }],
+
+  getToken: function(){
+    return localStorage.getItem('user');
+  },
 
 });
