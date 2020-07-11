@@ -4,11 +4,11 @@ Ext.define('hdb.view.login.LoginController', {
     requires: [
         'hdb.config.Config',
     ],
-    onLogin: function(btn, event, Opts){
+    onSignin: function(btn, event, Opts){
         var win = btn.up('window'),
             form = win.down('form'),
             me = this,
-            userPass = form.getForm().getValues();
+            values = form.getForm().getValues();
         Ext.Ajax.request({
             url: hdb.config.onlogin,
             cors: true,
@@ -18,13 +18,13 @@ Ext.define('hdb.view.login.LoginController', {
                 'Content-Type': 'application/json'
             },
             jsonData: {
-                'email': userPass.user,
-                'password': userPass.pass
+                'username': values.username,
+                'password': values.password
             },
             success: function(conn, response, options, eOpts){
                 var result = Ext.JSON.decode(conn.responseText, true);
                 if(result.token){
-                    me.saveToken(result, userPass);
+                    me.saveToken(result, values);
                     me.getView().destroy();
                     Ext.widget(
                         'mainview'
@@ -59,7 +59,7 @@ Ext.define('hdb.view.login.LoginController', {
                 'email': values.email,
                 'name': values.name,
                 'surname': values.surname,
-                'login': values.login,
+                'username': values.username,
                 'password': values.password
             },
             success: function(conn, response, options, eOpts){
@@ -89,16 +89,16 @@ Ext.define('hdb.view.login.LoginController', {
     },
 
     saveToken: function(result, userPass){
-        localStorage.setItem("user", userPass.user);
+        localStorage.setItem("username", userPass.username);
         localStorage.setItem("userid", result.userId);
         localStorage.setItem("token", result.token);
         sessionStorage.setItem("historydb", result.message);
     },
 
     clearToken: function(){
-        localStorage.setItem("user", userPass.user);
-        localStorage.setItem("userid", result.userId);
-        localStorage.setItem("token", result.token);
-        sessionStorage.setItem("historydb", result.message);
+        localStorage.removeItem("username", userPass.username);
+        localStorage.removeItem("userid", result.userId);
+        localStorage.removeItem("token", result.token);
+        sessionStorage.removeItem("historydb", result.message);
     }
 });

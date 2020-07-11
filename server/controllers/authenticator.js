@@ -16,7 +16,7 @@ exports.signup = (req, res, next) => {
   const email = req.body.email;
   const name = req.body.name;
   const surname = req.body.surname;
-  const login = req.body.login;
+  const username = req.body.username;
   const password = req.body.password;
   bcrypt.hash(password, 12)
     .then(hashedPw => {
@@ -24,7 +24,7 @@ exports.signup = (req, res, next) => {
         email: email,
         name: name,
         surname: surname,
-        login: login,
+        username: username,
         password: hashedPw
       });
       return user.save();
@@ -48,10 +48,10 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  const email = req.body.email;
+  const username = req.body.username;
   const password = req.body.password;
   let loadedUser;
-  User.findOne({ email: email })
+  User.findOne({ username: username })
     .then(user => {
       if (!user) {
         const error = new Error('Login do not match!');
@@ -69,14 +69,14 @@ exports.login = (req, res, next) => {
       }
       const token = jwt.sign(
         {
-          email: loadedUser.email,
+          username: loadedUser.username,
           userId: loadedUser._id.toString()
         },
         process.env.JWT_KEY,
         { expiresIn: '29d' }
       );
       loadedUser.tokens = loadedUser.tokens.push({ token })
-      User.findOne({ email: email }).then(user => {
+      User.findOne({ username: username }).then(user => {
         user.tokens = loadedUser.tokens
         user.save()
       });

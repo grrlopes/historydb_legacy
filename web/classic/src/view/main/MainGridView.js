@@ -184,7 +184,7 @@ Ext.define('hdb.view.main.MainGridView', {
     }],
 
   getToken: function(){
-    return localStorage.getItem('user');
+    return localStorage.getItem('username');
   },
 
 });

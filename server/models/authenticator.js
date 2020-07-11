@@ -6,7 +6,7 @@ const authSchema = new Schema(
     email: { type: String, required: true },
     name: { type: String, required: true },
     surname: { type: String, required: true },
-    login: { type: String, required: true },
+    username: { type: String, required: true },
     password: { type: String, required: true },
     status: { type: String, default: 'I am new here', required: true },
     commands: [

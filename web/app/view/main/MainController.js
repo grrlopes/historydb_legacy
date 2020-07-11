@@ -105,7 +105,7 @@ Ext.define('hdb.view.main.MainController', {
     },
 
     clearToken: function(){
-        localStorage.removeItem("user");
+        localStorage.removeItem("username");
         localStorage.removeItem("userid");
         localStorage.removeItem("token");
         sessionStorage.removeItem("historydb");

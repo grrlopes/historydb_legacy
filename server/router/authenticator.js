@@ -24,12 +24,12 @@ router.post('/signup', [
 		.matches(/^[A-Za-z\s]+$/).withMessage('Name must be alphabetic.'),
 	body('surname').isString().notEmpty()
 		.matches(/^[A-Za-z\s]+$/).withMessage('Surname must be alphabetic.'),
-	body('login').trim().isLength({ min: 4 })
-	.withMessage('Login must be at least 4 characters')
+	body('username').trim().isLength({ min: 4 })
+	.withMessage('Username must be at least 4 characters')
 	.custom((value, { req }) => {
-		return login.findOne({ login: value }).then(userDoc => {
+		return login.findOne({ username: value }).then(userDoc => {
 			if (userDoc) {
-				return Promise.reject('Login already exists!');
+				return Promise.reject('Username already exists!');
 			}
 		})
 	}),

@@ -11,7 +11,7 @@ Ext.define('hdb.view.login.Login', {
 
     bodyPadding: 1,
     resizable: false,
-    title: 'Credential',
+    title: 'HistoryDB',
     closable: false,
     autoShow: true,
     border: false,
@@ -27,31 +27,31 @@ Ext.define('hdb.view.login.Login', {
             bodyPadding: 10
         },
         items: [{
-            title: 'Login',
+            title: 'Sign In',
             items: [{
                 width: 345,
                 height: 150,
                 xtype: 'form',
                 items: [{
                     xtype: 'textfield',
-                    name: 'user',
-                    fieldLabel: 'Usuário',
+                    name: 'username',
+                    fieldLabel: 'Username',
                     allowBlank: false
                 },{
                     xtype: 'textfield',
-                    name: 'pass',
+                    name: 'password',
                     inputType: 'password',
-                    fieldLabel: 'senha',
+                    fieldLabel: 'Password',
                     allowBlank: false
                 },{
                     xtype: 'displayfield',
                     hideEmptyLabel: false
                 }],
                 buttons: [{
-                    text: 'Logar',
+                    text: 'Sign in',
                     formBind: true,
                     listeners: {
-                        click: 'onLogin'
+                        click: 'onSignin'
                     }
                 }]
             }]
@@ -78,8 +78,8 @@ Ext.define('hdb.view.login.Login', {
                     allowBlank: false
                 },{
                     xtype: 'textfield',
-                    name: 'login',
-                    fieldLabel: 'Login',
+                    name: 'username',
+                    fieldLabel: 'Username',
                     allowBlank: false
                 },{
                     xtype: 'textfield',
