@@ -18,7 +18,7 @@ const commandSchema = new Schema(
 		definition: { type: String, required: true },
 		commands: [command],
 	},
-	{ timestamps: { createdAt: true, updatedAt: { type: Date, default: Date.now() } } }
+	{ timestamps: { createdAt: true, updatedAt: true} }
 );
 
 module.exports = mongoose.model('Posts', commandSchema);
