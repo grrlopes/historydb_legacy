@@ -12,8 +12,9 @@ Ext.define('hdb.view.main.MainGridView', {
                 xtype:'button',
                 text: this.getToken(),
                 glyph: 'f007@FontAwesome',
-                disabled: true,
-                margin: 'auto, 5px, auto, auto'
+                disabled: false,
+                margin: 'auto, 5px, auto, auto',
+                handler: 'onPerfil'
             },{
                 xtype: 'button',
                 text: 'Exit',
@@ -75,7 +76,7 @@ Ext.define('hdb.view.main.MainGridView', {
         align: 'center',
         width: 135,
         xtype: 'datecolumn',
-        format: 'd-m-Y H:i' 
+        format: 'd-m-Y H:i'
     },{
       header: 'Updated',
       dataIndex: 'updatedAt',
@@ -104,8 +105,14 @@ Ext.define('hdb.view.main.MainGridView', {
           name: 'pesquisa',
           emptyText: 'Search',
           enableKeyEvents: true,
-          onTriggerClick: function(field, trigger, e){
-            Ext.getCmp('pesquisa').setValue('');
+          triggers: {
+            clear: {
+                cls: Ext.baseCSSPrefix + 'form-clear-trigger',
+                weight: 1,
+                handler: function () {
+                  Ext.getCmp('pesquisa').setValue('');
+                }
+            }
           },
           listeners: {
             change: {
