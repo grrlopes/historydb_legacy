@@ -1,0 +1,26 @@
+version: '3.8'
+networks:
+  web:
+services:
+  backend:
+    container_name: backend_api
+    image: node:13.13.0-alpine
+    volumes:
+      - ./server:/backend
+    networks:
+      - web
+    ports:
+      - 3000:8080
+    working_dir: "/backend"
+    command: sh -c "npm i && npx pm2-docker start app.js"
+  frontend:
+    container_name: http_web
+    image: nginx
+    volumes:
+      - ./web:/usr/share/nginx/html/
+    networks:
+      - web
+    ports:
+      - 8088:80
+    depends_on:
+      - backend
