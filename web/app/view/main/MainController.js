@@ -99,6 +99,10 @@ Ext.define('hdb.view.main.MainController', {
         });
     },
 
+    onPerfil: function(){
+      Ext.create('hdb.view.perfil.PerfilFormWin');
+    },
+
     getToken: function(){
         var token = localStorage.getItem('token');
         this.getViewModel().set('token', token);

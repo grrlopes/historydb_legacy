@@ -19,3 +19,4 @@ server/node_modules
 .vscode/
 web/sencha-error*
 server/package-lock.json
+web/sass/example/example.css

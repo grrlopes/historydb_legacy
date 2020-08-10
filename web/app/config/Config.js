@@ -36,9 +36,15 @@ Ext.define("hdb.config.Config", {
       app/store
       MainFormGridStore
     */
-    command: 'http://localhost:8080/api/command'
+    command: 'http://localhost:8080/api/command',
+    /*
+      app/view/perfil
+      PerfilViewModel
+    */
+    perfilupdate: 'http://localhost:8080/perfil/perfilupdate',
+
 	},
-	
+
 
   constructor: function () {
 		var constant = this.constant;

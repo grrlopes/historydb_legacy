@@ -5,6 +5,7 @@ require('dotenv').config()
 
 const CommandRoutes = require('./router/commands');
 const AuthRoutes = require('./router/authenticator');
+const Perfils = require('./router/perfil');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use((req, res, next) => {
 
 app.use('/api', CommandRoutes);
 app.use('/auth', AuthRoutes);
+app.use('/perfil', Perfils);
 
 app.use((error, req, res, next) => {
 	const status = error.statusCode || 500;
