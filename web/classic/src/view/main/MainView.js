@@ -15,7 +15,7 @@ Ext.define('hdb.view.main.MainView', {
     },
 
     items: [{
-        region: 'center',              
+        region: 'center',
         border: false,
         defaults: {
             layout: 'fit'
