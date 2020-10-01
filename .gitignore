@@ -20,3 +20,6 @@ server/node_modules
 web/sencha-error*
 server/package-lock.json
 web/sass/example/example.css
+.env
+coverage/
+.nyc_output/

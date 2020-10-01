@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/commands', check_auth, CommandController.getCommands);
 
-router.get('/command', CommandController.getCommand);
+router.get('/command', check_auth, CommandController.getCommand);
 
 router.get('/commandsSearch', check_auth, CommandController.getCommandsSearch);
 
