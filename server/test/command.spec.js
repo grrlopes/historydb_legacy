@@ -32,14 +32,14 @@ describe("Endpoint /api/", () => {
       });
     });
 
-    it("should return 400 error when invalid object id is passed", async () => {
-      const res = await request(app).get("/api/command/?_id=2f7068d6b8dbec2bd6aeb1c1");
-      expect(res.status).to.equal(400);
+    it("should return 500 error when invalid object id is passed", async () => {
+      const res = await request(app).get("/api/command/?_id=2f7068d6b8dbec2bd6aeb1c1d");
+      expect(res.status).to.equal(500);
     });
 
-    it("should return 500 error when valid object id is passed but does not exist", async () => {
-      const res = await request(app).get("/api/command/?_id=2f7068d6b8dbec2bd6aeb");
-      expect(res.status).to.equal(500);
+    it("should return 404 error when valid object id is passed but does not exist", async () => {
+      const res = await request(app).get("/api/command/?_id=2f7068d6b8dbec2bd6ae1bc3");
+      expect(res.status).to.equal(404);
     });
   });
 
@@ -56,7 +56,12 @@ describe("Endpoint /api/", () => {
         }
       ];
       await Commands.insertMany(commands);
-      const res = await request(app).get("/api/commands?page=1&start=0&limit=50");
+      const token = await request(app).post("/auth/login").send({
+        username: "test",
+        password: "12345678"
+      });
+      const res = await request(app).get("/api/commands?page=1&start=0&limit=50")
+      .set('Authorization', 'Bearer '+token.body.token);
       expect(res.status).to.equal(200);
       expect(res.body.total).to.equal(2);
     });

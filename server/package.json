@@ -4,7 +4,8 @@
   "description": "That server will store and providing through an api information as command line, sql/nosql query and so on",
   "main": "app.js",
   "scripts": {
-    "test": "node_modules/.bin/mocha --exit --timeout 15000",
+    "test": "node_modules/.bin/mocha --exit --timeout 12000",
+    "coverage": "node_modules/.bin/nyc --reporter=html --reporter=text mocha --exit --timeout 12000",
     "start": "nodemon ./bin/www",
     "prod": "node_modules/.bin/pm2 start app.js --name historydb",
     "prod:stop": "node_modules/.bin/pm2 stop app.js --name historydb"

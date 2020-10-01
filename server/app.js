@@ -39,7 +39,6 @@ mongoose.connect(
 	}
 ).then(
 	result => {
-		//app.listen(process.env.APP_PORT);
 		if (result.connection.readyState == 1) {
 			console.log(`Connected to Database at ${process.env.MONGODB_PORT}`);
 		}

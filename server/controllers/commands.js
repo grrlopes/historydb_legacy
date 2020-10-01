@@ -90,7 +90,7 @@ exports.getCommand = (req, res, next) => {
 			if (!err.statusCode) {
 				err.statusCode = 500;
 			}
-			res.json({ message: err.message, code: err.statusCode })
+			res.status(404).json({ message: err.message, code: err.statusCode })
 		});
 };
 
