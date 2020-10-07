@@ -1,18 +1,18 @@
-const express = require('express');
+const express = require("express");
 
-const CommandController = require('../controllers/commands');
-const check_auth = require('../middleware/token_auth');
+const CommandController = require("../controllers/commands");
+const checkAuth = require("../middleware/token_auth");
 
 const router = express.Router();
 
-router.get('/commands', check_auth, CommandController.getCommands);
+router.get("/commands", checkAuth, CommandController.getCommands);
 
-router.get('/command', check_auth, CommandController.getCommand);
+router.get("/command", checkAuth, CommandController.getCommand);
 
-router.get('/commandsSearch', check_auth, CommandController.getCommandsSearch);
+router.get("/commandsSearch", checkAuth, CommandController.getCommandsSearch);
 
-router.put('/addcommand', check_auth, CommandController.addCommand);
+router.put("/addcommand", checkAuth, CommandController.addCommand);
 
-router.post('/newRegCommand', check_auth, CommandController.newRegisterCommand);
+router.post("/newRegCommand", checkAuth, CommandController.newRegisterCommand);
 
 module.exports = router;

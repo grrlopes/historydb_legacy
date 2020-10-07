@@ -5,7 +5,8 @@
 		{
 			"files": ["*spec.js"],
 			"rules": {
-				"no-undef": "off"
+        "no-undef": "off",
+        "node/no-unpublished-require": "warn"
 			}
 		}
 	],

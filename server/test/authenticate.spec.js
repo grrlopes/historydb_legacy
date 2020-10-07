@@ -1,7 +1,7 @@
 const request = require("supertest");
-const expect = require("chai").expect;
+const { expect } = require("chai");
 
-const Signup = require('../models/authenticator');
+const Signup = require("../models/authenticator");
 const app = require("../app");
 
 describe("Endpoint /auth/", () => {
@@ -15,19 +15,18 @@ describe("Endpoint /auth/", () => {
         name: "Testy",
         surname: "Testin",
         username: "test",
-        password: "12345678"
+        password: "12345678",
       });
       const res = await request(app).post("/auth/signup").send(newLogin);
       expect(res.status).to.equal(201);
     });
-
   });
 
   describe("POST auth/login", () => {
     it("should return code 200 if valid credencial is passed", async () => {
       const res = await request(app).post("/auth/login").send({
         username: "test",
-        password: "12345678"
+        password: "12345678",
       });
       expect(res.status).to.equal(200);
     });
@@ -35,7 +34,7 @@ describe("Endpoint /auth/", () => {
     it("should conten token and userId", async () => {
       const res = await request(app).post("/auth/login").send({
         username: "test",
-        password: "12345678"
+        password: "12345678",
       });
       expect(res.status).to.equal(200);
       expect(res.body).to.have.property("token");
@@ -46,7 +45,7 @@ describe("Endpoint /auth/", () => {
     it("should return message: wrong password", async () => {
       const res = await request(app).post("/auth/login").send({
         username: "test",
-        password: "123456789"
+        password: "123456789",
       });
       expect(res.status).to.equal(401);
       expect(res.body).to.have.property("message", "Wrong password");
@@ -55,13 +54,10 @@ describe("Endpoint /auth/", () => {
     it("should return message: Login do not match!", async () => {
       const res = await request(app).post("/auth/login").send({
         username: "testt",
-        password: "12345678"
+        password: "12345678",
       });
       expect(res.status).to.equal(401);
       expect(res.body).to.have.property("message", "Login do not match!");
-    })
+    });
   });
-
-
-
-})
+});

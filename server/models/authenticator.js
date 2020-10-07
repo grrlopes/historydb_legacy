@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require("mongoose");
+
+const { Schema } = mongoose;
 
 const authSchema = new Schema(
   {
@@ -8,18 +9,20 @@ const authSchema = new Schema(
     surname: { type: String, required: true },
     username: { type: String, required: true },
     password: { type: String, required: true },
-    status: { type: String, default: 'I am new here', required: true },
+    status: { type: String, default: "I am new here", required: true },
     commands: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Post'
-      }
+        ref: "Post",
+      },
     ],
-    tokens: [{
-      token: { type: String, required: true }
-    }]
+    tokens: [
+      {
+        token: { type: String, required: true },
+      },
+    ],
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Auth', authSchema);
+module.exports = mongoose.model("Auth", authSchema);
