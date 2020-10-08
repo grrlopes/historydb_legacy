@@ -1,8 +1,8 @@
 FROM node:lts-alpine
 WORKDIR /app
-COPY package.json ./
+COPY server/package.json ./
 RUN npm install --production
-COPY . ./
+COPY server ./
 EXPOSE 8080
 RUN ls -la /app
 CMD ["npm", "run", "prod-dock"]
