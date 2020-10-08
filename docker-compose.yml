@@ -1,26 +1,35 @@
 version: '3.8'
 networks:
-  web:
+  backend:
+  frontend:
+  proxy:
 services:
   backend:
-    container_name: backend_api
-    image: node:13.13.0-alpine
-    volumes:
-      - ./server:/backend
+    container_name: backend_hdb
+    image: historydb:2.0
+    environment:
+      - MONGODB_ADDR=mutante
     networks:
-      - web
-    ports:
-      - 3000:8080
-    working_dir: "/backend"
-    command: sh -c "npm i && npx pm2-docker start app.js"
-  frontend:
-    container_name: http_web
-    image: nginx
+      - backend
+  proxy:
+    container_name: proxy_hdb
+    image: nginx:1.19.2-alpine
     volumes:
-      - ./web:/usr/share/nginx/html/
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     networks:
-      - web
+      - proxy
+      - backend
     ports:
-      - 8088:80
+      - 8080:80
     depends_on:
       - backend
+  frontend:
+    container_name: frontend_hdb
+    image: nginx:1.19.2-alpine
+    volumes:
+      - ./web/build/hdb:/usr/share/nginx/html/
+    ports:
+      - 80:80
+    networks:
+      - frontend
+      - proxy
