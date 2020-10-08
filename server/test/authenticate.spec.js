@@ -10,13 +10,13 @@ describe("Endpoint /auth/", () => {
   });
   describe("POST auth/signup", () => {
     it("should return code 201 user created", async () => {
-      const newLogin = new Signup({
+      const newLogin = {
         email: "test@test.com",
         name: "Testy",
         surname: "Testin",
         username: "test",
         password: "12345678",
-      });
+      };
       const res = await request(app).post("/auth/signup").send(newLogin);
       expect(res.status).to.equal(201);
     });

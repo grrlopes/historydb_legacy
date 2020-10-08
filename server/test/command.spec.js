@@ -1,3 +1,7 @@
+/**
+ * That test should be refactored due
+ * to having a planty of repetition.
+ */
 const request = require("supertest");
 const { expect } = require("chai");
 
@@ -23,7 +27,12 @@ describe("Endpoint /api/", () => {
         ],
       });
       result = await commands.save();
-      const res = await request(app).get(`/api/command/?_id=${result._id}`);
+      const token = await request(app).post("/auth/login").send({
+        username: "test",
+        password: "12345678",
+      });
+      const res = await request(app).get(`/api/command/?_id=${result._id}`)
+      .set("Authorization", `Bearer ${token.body.token}`);
       expect(res.status).to.equal(200);
       expect(res.body.data[0]).to.deep.include({
         author: commands.author,
@@ -35,16 +44,24 @@ describe("Endpoint /api/", () => {
     });
 
     it("should return 500 error when invalid object id is passed", async () => {
+      const token = await request(app).post("/auth/login").send({
+        username: "test",
+        password: "12345678",
+      });
       const res = await request(app).get(
         "/api/command/?_id=2f7068d6b8dbec2bd6aeb1c1d"
-      );
+      ).set("Authorization", `Bearer ${token.body.token}`);
       expect(res.status).to.equal(500);
     });
 
     it("should return 404 error when valid object id is passed but does not exist", async () => {
+      const token = await request(app).post("/auth/login").send({
+        username: "test",
+        password: "12345678",
+      });
       const res = await request(app).get(
         "/api/command/?_id=2f7068d6b8dbec2bd6ae1bc3"
-      );
+      ).set("Authorization", `Bearer ${token.body.token}`);
       expect(res.status).to.equal(404);
     });
   });
