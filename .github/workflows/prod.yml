@@ -49,6 +49,4 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: glopes/historydb
         dockerfile: server/Dockerfile
-        tags: |
-          2.0
-          latest
+        tags: latest,2.0-navajo
