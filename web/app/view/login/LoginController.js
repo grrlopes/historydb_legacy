@@ -39,7 +39,6 @@ Ext.define('hdb.view.login.LoginController', {
                     closable: false,
                     buttons: Ext.Msg.OK
                 });
-                me.clearToken();
             }
         });
     },

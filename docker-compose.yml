@@ -8,7 +8,7 @@ services:
     container_name: backend_hdb
     image: historydb:2.0
     environment:
-      - MONGODB_ADDR=mutante
+      - MONGODB_BASE=historydev
     networks:
       - backend
   proxy:

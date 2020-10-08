@@ -10,7 +10,8 @@
     "coverage": "node_modules/.bin/nyc --reporter=html --reporter=text mocha --exit --timeout 12000",
     "start": "nodemon ./bin/www",
     "prod": "node_modules/.bin/pm2 start app.js --name historydb",
-    "prod:stop": "node_modules/.bin/pm2 stop app.js --name historydb"
+    "prod:stop": "node_modules/.bin/pm2 stop app.js --name historydb",
+    "prod-dock": "node_modules/.bin/pm2-runtime start ./bin/www --name historydb"
   },
   "keywords": [
     "node",
@@ -29,7 +30,7 @@
     "express": "^4.17.1",
     "express-validator": "^6.6.1",
     "jsonwebtoken": "^8.5.1",
-    "loadash": "^1.0.0",
+    "lodash": "^4.17.20",
     "mongoose": "^5.10.8",
     "pm2": "^4.5.0",
     "validator": "^13.1.17"
