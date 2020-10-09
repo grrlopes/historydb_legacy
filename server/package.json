@@ -1,6 +1,6 @@
 {
   "name": "historydb",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "That server will store and providing through an api information as command line, sql/nosql query and so on",
   "main": "app.js",
   "scripts": {
