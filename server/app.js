@@ -38,7 +38,7 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    `mongodb://${process.env.MONGODB_ADDR}:${process.env.MONGODB_PORT}/postapi`,
+    `mongodb://${process.env.MONGODB_ADDR}:${process.env.MONGODB_PORT}/${process.env.MONGODB_BASE}`,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

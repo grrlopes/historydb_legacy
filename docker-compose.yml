@@ -30,6 +30,8 @@ services:
       - ./web/build/hdb:/usr/share/nginx/html/
     ports:
       - 80:80
+    depends_on:
+      - backend
+      - proxy
     networks:
       - frontend
-      - proxy
