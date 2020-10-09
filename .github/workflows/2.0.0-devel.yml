@@ -1,9 +1,12 @@
-name: Build App for Prod
+name: Build App for Development
 
 on:
   push:
     branches:
-      - master
+      - 2.0.0-dev
+  pull_request:
+    branches:
+      - 2.0.0-dev
 
 jobs:
   test:
@@ -33,7 +36,7 @@ jobs:
         cd server && npm run coverage
 
   build-deploy-backend:
-    name: Build Deploy Backend
+    name: Build Deploy Backend 2.0-devel
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -46,4 +49,4 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: glopes/historydb
         dockerfile: server/Dockerfile
-        tags: latest,2.0-navajo
+        tags: 2.0-devel
