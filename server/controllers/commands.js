@@ -236,7 +236,7 @@ exports.newRegisterCommand = async (req, res, next) => {
     });
 
     const result = await commands.save();
-    res.status(200).json({ message: "Command has added!", data: result });
+    res.status(201).json({ message: "Command has added!", data: result });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

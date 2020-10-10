@@ -13,7 +13,7 @@ describe("Endpoint /api/", () => {
     await Commands.deleteMany();
   });
   describe("GET command/?_id = ID", () => {
-    it("should return a user if valid id is passed", async () => {
+    it("should return 'command object' by id after it has been created", async () => {
       const commands = new Commands({
         author: "Gabriel",
         title: "teste_teste",
@@ -31,8 +31,9 @@ describe("Endpoint /api/", () => {
         username: "test",
         password: "12345678",
       });
-      const res = await request(app).get(`/api/command/?_id=${result._id}`)
-      .set("Authorization", `Bearer ${token.body.token}`);
+      const res = await request(app)
+        .get(`/api/command/?_id=${result._id}`)
+        .set("Authorization", `Bearer ${token.body.token}`);
       expect(res.status).to.equal(200);
       expect(res.body.data[0]).to.deep.include({
         author: commands.author,
@@ -48,9 +49,9 @@ describe("Endpoint /api/", () => {
         username: "test",
         password: "12345678",
       });
-      const res = await request(app).get(
-        "/api/command/?_id=2f7068d6b8dbec2bd6aeb1c1d"
-      ).set("Authorization", `Bearer ${token.body.token}`);
+      const res = await request(app)
+        .get("/api/command/?_id=2f7068d6b8dbec2bd6aeb1c1d")
+        .set("Authorization", `Bearer ${token.body.token}`);
       expect(res.status).to.equal(500);
     });
 
@@ -59,9 +60,9 @@ describe("Endpoint /api/", () => {
         username: "test",
         password: "12345678",
       });
-      const res = await request(app).get(
-        "/api/command/?_id=2f7068d6b8dbec2bd6ae1bc3"
-      ).set("Authorization", `Bearer ${token.body.token}`);
+      const res = await request(app)
+        .get("/api/command/?_id=2f7068d6b8dbec2bd6ae1bc3")
+        .set("Authorization", `Bearer ${token.body.token}`);
       expect(res.status).to.equal(404);
     });
   });
@@ -92,6 +93,45 @@ describe("Endpoint /api/", () => {
         .set("Authorization", `Bearer ${token.body.token}`);
       expect(res.status).to.equal(200);
       expect(res.body.total).to.equal(2);
+    });
+  });
+
+  describe("POST newregcommand/", () => {
+    it("should return message: Command has added!", async () => {
+      const command = {
+        author: "Test ",
+        title: "qwqwqwqw",
+        definition: "xxzxzxzx",
+        command: "xzxzx vcvvccv",
+      };
+      const token = await request(app).post("/auth/login").send({
+        username: "test",
+        password: "12345678",
+      });
+      const res = await request(app)
+        .post("/api/newRegCommand")
+        .send(command)
+        .set("Authorization", `Bearer ${token.body.token}`);
+      expect(res.status).to.equal(201);
+      expect(res.body).to.have.property("message", "Command has added!");
+    });
+
+    it("should return code 400 whether a wrong or missing fields are passed.", async () => {
+      const command = {
+        author: "Test",
+        definition: "xxzxzxzx",
+        command: "xzxzx vcvvccv",
+      };
+      const token = await request(app).post("/auth/login").send({
+        username: "test",
+        password: "12345678",
+      });
+      const res = await request(app)
+        .post("/api/newRegCommand")
+        .send(command)
+        .set("Authorization", `Bearer ${token.body.token}`);
+      expect(res.status).to.equal(400);
+      expect(res.body.message).to.be.a("string");
     });
   });
 });
