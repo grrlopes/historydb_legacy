@@ -134,4 +134,30 @@ describe("Endpoint /api/", () => {
       expect(res.body.message).to.be.a("string");
     });
   });
+
+  describe("POST addcommand/", () => {
+    it("should return message: Command added!", async () => {
+      const idd = await request(app)
+      .get("/api/commands?page=1&start=0&limit=1")
+      .set("Authorization", `Bearer ${token.body.token}`);
+      console.log(idd);
+      return
+      const addcommand = {
+        _id:"5e76d5f19f031a48d9dd4ffc",
+        author: "Test Add",
+        command: "Test xxxcvv addcommand"
+      };
+      const token = await request(app).post("/auth/login").send({
+        username: "test",
+        password: "12345678",
+      });
+      const res = await request(app)
+        .post("/api/addcommand")
+        .send(addcommand)
+        .set("Authorization", `Bearer ${token.body.token}`);
+      expect(res.status).to.equal(200);
+      expect(res.body).to.have.property("message", "Command added!");
+    })
+  });
+
 });
