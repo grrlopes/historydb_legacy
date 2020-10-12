@@ -138,7 +138,7 @@ describe("Endpoint /api/", () => {
     });
   });
 
-  describe("POST addcommand/", () => {
+  describe("PUT addcommand/", () => {
     it("should return message: Command added!", async () => {
       const token = await request(app).post("/auth/login").send({
         username: "test",
@@ -154,7 +154,7 @@ describe("Endpoint /api/", () => {
         command: "Test xxxcvv addcommand"
       };
       const res = await request(app)
-        .post("/api/addcommand")
+        .put("/api/addcommand")
         .send(addcommand)
         .set("Authorization", `Bearer ${token.body.token}`);
       expect(res.status).to.equal(200);
