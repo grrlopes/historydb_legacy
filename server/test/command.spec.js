@@ -9,7 +9,7 @@ const Commands = require("../models/commands");
 const app = require("../app");
 
 describe("Endpoint /api/", () => {
-  beforeEach(async () => {
+  before(async () => {
     await Commands.deleteMany();
   });
   describe("GET command/?_id = ID", () => {
@@ -68,6 +68,9 @@ describe("Endpoint /api/", () => {
   });
 
   describe("GET commands/?page=1&start=0&limit=50", () => {
+    before(async () => {
+      await Commands.deleteMany();
+    });
     it("should return all users", async () => {
       const commands = [
         {
@@ -137,20 +140,19 @@ describe("Endpoint /api/", () => {
 
   describe("POST addcommand/", () => {
     it("should return message: Command added!", async () => {
-      const idd = await request(app)
-      .get("/api/commands?page=1&start=0&limit=1")
-      .set("Authorization", `Bearer ${token.body.token}`);
-      console.log(idd);
-      return
-      const addcommand = {
-        _id:"5e76d5f19f031a48d9dd4ffc",
-        author: "Test Add",
-        command: "Test xxxcvv addcommand"
-      };
       const token = await request(app).post("/auth/login").send({
         username: "test",
         password: "12345678",
       });
+      const idd = await request(app)
+      .get("/api/commands?page=1&start=0&limit=1")
+      .set("Authorization", `Bearer ${token.body.token}`);
+
+      const addcommand = {
+        _id: idd.body.data[0]._id,
+        author: "Test Add",
+        command: "Test xxxcvv addcommand"
+      };
       const res = await request(app)
         .post("/api/addcommand")
         .send(addcommand)
