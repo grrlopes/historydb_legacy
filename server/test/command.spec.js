@@ -145,13 +145,13 @@ describe("Endpoint /api/", () => {
         password: "12345678",
       });
       const idd = await request(app)
-      .get("/api/commands?page=1&start=0&limit=1")
-      .set("Authorization", `Bearer ${token.body.token}`);
+        .get("/api/commands?page=1&start=0&limit=1")
+        .set("Authorization", `Bearer ${token.body.token}`);
 
       const addcommand = {
         _id: idd.body.data[0]._id,
         author: "Test Add",
-        command: "Test xxxcvv addcommand"
+        command: "Test xxxcvv addcommand",
       };
       const res = await request(app)
         .put("/api/addcommand")
@@ -159,7 +159,6 @@ describe("Endpoint /api/", () => {
         .set("Authorization", `Bearer ${token.body.token}`);
       expect(res.status).to.equal(200);
       expect(res.body).to.have.property("message", "Command added!");
-    })
+    });
   });
-
 });

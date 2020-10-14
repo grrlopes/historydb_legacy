@@ -9,10 +9,10 @@ router.get("/commands", checkAuth, CommandController.getCommands);
 
 router.get("/command", checkAuth, CommandController.getCommand);
 
-router.get("/commandsSearch", checkAuth, CommandController.getCommandsSearch);
+router.get("/commandssearch", checkAuth, CommandController.getCommandsSearch);
 
 router.put("/addcommand", checkAuth, CommandController.addCommand);
 
-router.post("/newRegCommand", checkAuth, CommandController.newRegisterCommand);
+router.post("/newregcommand", checkAuth, CommandController.newRegisterCommand);
 
 module.exports = router;
