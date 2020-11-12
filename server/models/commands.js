@@ -22,4 +22,4 @@ const commandSchema = new Schema(
   { timestamps: { createdAt: true, updatedAt: true } }
 );
 
-module.exports = mongoose.model("Posts", commandSchema);
+module.exports = mongoose.model("Comandos", commandSchema);

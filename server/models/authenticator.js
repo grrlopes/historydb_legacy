@@ -13,7 +13,7 @@ const authSchema = new Schema(
     commands: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Post",
+        ref: "Comandos",
       },
     ],
     tokens: [
