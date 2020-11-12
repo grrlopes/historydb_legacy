@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/authenticator");
 
 exports.signup = (req, res, next) => {
+  const { email, name, surname, username, password } = req.body;
   const erros = validationResult(req);
   try {
     if (!erros.isEmpty()) {
@@ -13,11 +14,7 @@ exports.signup = (req, res, next) => {
       error._custom = erros.array();
       throw error;
     }
-    const { email } = req.body;
-    const { name } = req.body;
-    const { surname } = req.body;
-    const { username } = req.body;
-    const { password } = req.body;
+
     bcrypt
       .hash(password, 12)
       .then((hashedPw) => {

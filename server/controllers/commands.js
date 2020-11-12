@@ -101,8 +101,7 @@ exports.getCommand = (req, res, next) => {
 };
 
 exports.getCommandsSearch = async (req, res, next) => {
-  const { limit } = req.query;
-  const { start } = req.query;
+  const { limit, start } = req.query;
 
   try {
     const objSearch = checkSearch.queryCheckbox(req.query);
@@ -219,8 +218,7 @@ exports.addCommand = async (req, res, next) => {
 
 exports.newRegisterCommand = async (req, res, next) => {
   const author = req.user.username;
-  const { title } = req.body;
-  const { definition } = req.body;
+  const { title, definition } = req.body;
   const commComm = req.body.command;
   try {
     const commands = new Commands({
