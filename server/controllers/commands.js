@@ -4,61 +4,61 @@ const checkSearch = require("../middleware/check_search");
 
 const objectId = Mongoose.Types.ObjectId;
 
-exports.getCommands = (req, res, next) => {
-  const { limit } = req.query;
-  const { start } = req.query;
-  let total;
-  Commands.aggregate([
-    {
-      $match: {
-        "commands.main": {
-          $in: [true],
+exports.getCommands = async (req, res, next) => {
+  const { limit, start } = req.query;
+
+  try {
+    const count = await Commands.aggregate([
+      {
+        $match: {
+          "commands.main": {
+            $in: [true],
+          },
         },
       },
-    },
-    { $count: "total" },
-  ])
-    .then((count) => {
-      if (count === null || count.length === 0) {
-        const error = new Error("There are not records.");
-        error.statusCode = 404;
-        throw error;
-      }
-      total = count[0].total;
-      return Commands.aggregate([
-        { $unwind: "$commands" },
-        {
-          $match: {
-            "commands.main": {
-              $in: [true],
-            },
+      { $count: "total" },
+    ]);
+
+    if (count === null || count.length === 0) {
+      const error = new Error("There are not records.");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    const { total } = count[0];
+
+    const result = await Commands.aggregate([
+      { $unwind: "$commands" },
+      {
+        $match: {
+          "commands.main": {
+            $in: [true],
           },
         },
-        {
-          $project: {
-            author: 1,
-            title: 1,
-            definition: 1,
-            cmd_author: "$commands.author",
-            command: "$commands.command",
-            cmd_created_at: "$commands.createdAt",
-            createdAt: 1,
-            updatedAt: 1,
-          },
+      },
+      {
+        $project: {
+          author: 1,
+          title: 1,
+          definition: 1,
+          cmd_author: "$commands.author",
+          command: "$commands.command",
+          cmd_created_at: "$commands.createdAt",
+          createdAt: 1,
+          updatedAt: 1,
         },
-        { $skip: parseInt(start, 10) },
-        { $limit: parseInt(limit, 10) },
-      ]);
-    })
-    .then((result) => {
-      res.json({ total: total, data: result });
-    })
-    .catch((error) => {
-      if (!error.statusCode) {
-        error.statusCode = 500;
-      }
-      res.json({ message: error.message, code: error.statusCode });
-    });
+      },
+      { $skip: parseInt(start, 10) },
+      { $limit: parseInt(limit, 10) },
+    ]);
+
+    return res.json({ total: total, data: result });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    return res.json({ message: error.message, code: error.statusCode });
+  }
 };
 
 exports.getCommand = (req, res, next) => {
@@ -92,10 +92,11 @@ exports.getCommand = (req, res, next) => {
       res.json({ data: result });
     })
     .catch((err) => {
-      if (!err.statusCode) {
-        err.statusCode = 500;
+      const error = err;
+      if (!error.statusCode) {
+        error.statusCode = 500;
       }
-      res.status(404).json({ message: err.message, code: err.statusCode });
+      res.status(404).json({ message: error.message, code: error.statusCode });
     });
 };
 
